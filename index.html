@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09111e"><meta name="description" content="TOEIC QUEST - ブラウザだけで繰り返し学習できるリスニング・リーディング独立トレーニングアプリ"><title>TOEIC QUEST v7 | Reading · Listening · Vocabulary · Mock Exam</title><style>:root{--bg:#09111e;--surface:#111e31;--surface2:#18283f;--surface3:#20344e;--line:#283c56;--text:#f1f6ff;--muted:#9db0cc;--teal:#5aebc3;--blue:#79aefe;--violet:#ba98ff;--amber:#ffc36b;--red:#ff829a;--green:#65e2ab;--shadow:0 18px 60px #050b1580;font-family:system-ui,-apple-system,'Segoe UI',Noto Sans JP,Arial,sans-serif; color-scheme:dark}
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09111e"><meta name="description" content="TOEIC QUEST - ブラウザだけで繰り返し学習できるリスニング・リーディング独立トレーニングアプリ"><title>TOEIC QUEST v8 | Reading · Listening · Vocabulary · Mock Exam</title><style>:root{--bg:#09111e;--surface:#111e31;--surface2:#18283f;--surface3:#20344e;--line:#283c56;--text:#f1f6ff;--muted:#9db0cc;--teal:#5aebc3;--blue:#79aefe;--violet:#ba98ff;--amber:#ffc36b;--red:#ff829a;--green:#65e2ab;--shadow:0 18px 60px #050b1580;font-family:system-ui,-apple-system,'Segoe UI',Noto Sans JP,Arial,sans-serif; color-scheme:dark}
 *{box-sizing:border-box}body{background:radial-gradient(ellipse 55% 50% at 12% -10%,#173759 0%,transparent 90%),radial-gradient(ellipse 40% 40% at 100% 5%,#2c204d 0%,transparent 100%),var(--bg);margin:0;color:var(--text);line-height:1.55;min-height:100vh}button,select,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}a{color:var(--teal)}.layout{max-width:1220px;margin:auto;padding:26px 24px 70px}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.brand{display:flex;gap:13px;align-items:center}.brand-mark{width:48px;height:48px;border:1px solid #64e6c780;border-radius:15px;display:grid;place-items:center;background:linear-gradient(140deg,#1b675d,#154a78);box-shadow:0 7px 22px #0d4f5438;font-size:27px}.brand b{font-size:18px;letter-spacing:.08em;display:block;line-height:1.15}.brand small{color:var(--muted);font-size:11px;letter-spacing:.19em}.rightbrand{display:flex;gap:10px;align-items:center}.tag{border:1px solid #5e85aa55;color:#bfceea;padding:6px 10px;border-radius:100px;font-size:12px;white-space:nowrap}.tag.online{border-color:#278b777a;color:var(--teal)}.hero{border:1px solid #304663;box-shadow:var(--shadow);background:linear-gradient(116deg,#162943 0%,#122238 54%,#231b3f 100%);border-radius:24px;padding:26px 28px;position:relative;overflow:hidden;margin-bottom:23px}.hero:after{content:'✦';position:absolute;right:25px;top:0;font-size:158px;color:#ffffff09;pointer-events:none}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.22em;color:var(--teal);text-transform:uppercase}.hero h1{font-size:clamp(25px,3.4vw,39px);line-height:1.2;letter-spacing:-.03em;margin:8px 0 9px}.hero p{max-width:700px;color:#bed0e7;margin:0;font-size:14px}.layout-grid{display:grid;grid-template-columns:295px minmax(0,1fr);gap:22px;align-items:start}.side{display:grid;gap:18px}.panel{background:linear-gradient(165deg,#142238,#101c2d);border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 34px #050e1d36;padding:20px}.panel-title{font-size:12px;font-weight:800;letter-spacing:.11em;color:#b6c8e3;text-transform:uppercase;margin-bottom:15px}.tabbar{background:#101c2e;border:1px solid var(--line);border-radius:13px;padding:5px;display:flex;gap:4px}.tab{border:0;background:transparent;border-radius:9px;padding:12px 9px;flex:1;color:#aebfd5;font-size:13px;font-weight:700}.tab.active{color:#062333;background:linear-gradient(120deg,var(--teal),#9bf2e0);box-shadow:0 4px 14px #2be1c32d}.controls{display:grid;gap:14px;margin-top:17px}.control-label{font-size:12px;color:#adc0db;display:block;font-weight:700;margin-bottom:7px}.select{width:100%;background:#0d192b;color:var(--text);border:1px solid #344b67;border-radius:10px;padding:11px}.toggle-row{display:flex;align-items:center;gap:9px;font-size:12px;color:#d4e1f3}.toggle-row input{accent-color:var(--teal);width:16px;height:16px}.hint{color:#8fa6c5;font-size:11px;line-height:1.55}.btn{padding:12px 16px;border-radius:12px;border:1px solid #455d7d;background:#21334b;color:var(--text);font-weight:800;transition:transform .12s,border-color .12s,background .12s;font-size:13px}.btn:hover:not(:disabled){transform:translateY(-1px);border-color:#7b99bd}.btn-primary{background:linear-gradient(115deg,#55e9c1,#91f3df);border-color:transparent;color:#082b32}.btn-secondary{background:#1b2c44;border:1px solid #395471;color:#dce9fa}.btn-ghost{background:transparent;border:1px solid #395471;color:#c5d8f0}.btn-warning{background:#513a31;color:#ffe2b1;border-color:#8e6048}.btn-wide{width:100%;display:block}.stack{display:grid;gap:9px}.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-stat{border:1px solid #2b415f;background:#102039;border-radius:13px;padding:11px}.mini-stat strong{display:block;font-size:21px;line-height:1.2;font-variant-numeric:tabular-nums}.mini-stat span{font-size:11px;color:var(--muted)}.progress-track{height:9px;border-radius:20px;overflow:hidden;background:#26374e}.progress-fill{background:linear-gradient(90deg,#55e9c1,#85bdff);height:100%;width:0;transition:width .28s ease}.progress-meta{display:flex;justify-content:space-between;color:#aebfdb;font-size:11px;margin-top:8px}.side-note{font-size:12px;color:#a9bbd3}.main{min-width:0}.main-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px}.main-top h2{font-size:20px;margin:0}.pill{border-radius:100px;padding:6px 11px;border:1px solid #384d69;background:#182a42;color:#b8d2ed;font-size:11px;font-weight:800;white-space:nowrap}.pill.teal{border-color:#259e8e80;color:var(--teal)}.pill.violet{border-color:#9363d980;color:#d1aeff}.quest-card{background:linear-gradient(160deg,#162840,#111d30);border:1px solid #2d4561;border-radius:22px;padding:25px;box-shadow:var(--shadow);min-height:475px}.center{text-align:center}.welcome-art{width:85px;height:85px;display:grid;place-items:center;margin:12px auto 18px;border-radius:25px;background:linear-gradient(130deg,#193f52,#393063);font-size:42px;border:1px solid #51788970}.welcome h3{font-size:25px;margin:0 0 10px}.welcome p{color:#b1c5dc;font-size:14px;max-width:520px;margin:0 auto 22px}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}.feature{background:#13263b;border:1px solid #2c4963;border-radius:12px;padding:12px 8px}.feature b{display:block;font-size:16px}.feature span{font-size:11px;color:var(--muted)}.challenge-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:15px}.q-no{font-size:12px;color:#8aabff;font-weight:900;letter-spacing:.12em}.flexspacer{flex:1}.combo{color:#ffc56f;font-size:12px;font-weight:800}.question-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.question-head .part{color:#98e7d3;font-size:12px;font-weight:800;letter-spacing:.02em}.question-head .skill{color:#a2b7d0;font-size:12px}.question-text{font-size:clamp(17px,2vw,21px);font-weight:750;white-space:pre-wrap;line-height:1.7;margin:19px 0 25px;color:#f4f8ff}.passage{white-space:pre-wrap;background:#0b1a2d;border:1px solid #304660;border-radius:13px;color:#d8e6f9;padding:18px;font-size:13px;line-height:1.72;max-height:310px;overflow:auto;margin:14px 0}.options{display:grid;gap:10px}.option{display:flex;gap:13px;align-items:center;text-align:left;width:100%;background:#112238;border:1px solid #324966;color:#e6f0ff;border-radius:13px;padding:12px 14px;min-height:54px;transition:background .14s,border-color .14s,transform .14s;font-size:14px}.option:hover:not(:disabled){background:#203a52;border-color:#80c7dc;transform:translateX(2px)}.letter{font-weight:800;border-radius:8px;width:31px;height:31px;display:grid;place-items:center;flex:0 0 auto;background:#243a52;color:#a7d9e9}.option.good{background:#123e36;border-color:var(--green)}.option.bad{background:#3f2335;border-color:var(--red)}.option.good .letter{background:#1c6c56;color:#dafff3}.option.bad .letter{background:#804055;color:#ffe5ec}.option:disabled{opacity:1;cursor:default}.answer-feedback{margin-top:18px;border:1px solid #3a5a76;background:#102336;border-radius:13px;padding:16px}.feedback-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:7px}.feedback-head strong{font-size:16px}.feedback-head .good-txt{color:var(--green)}.feedback-head .bad-txt{color:var(--red)}.feedback-body{font-size:13px;line-height:1.85;color:#d2e2f5}.translation{color:#9eb6cc;font-size:12px;margin-top:8px}.action-row{display:flex;gap:9px;margin-top:17px;flex-wrap:wrap}.action-row .btn-primary{flex:1;min-width:180px}.keyboard{color:#889bb6;font-size:11px;margin-top:12px}.audio-stage{border:1px solid #345773;background:linear-gradient(125deg,#0e3343,#1c254a);border-radius:17px;padding:24px;text-align:center;margin:16px 0 24px}.audio-graphic{display:flex;align-items:center;justify-content:center;gap:5px;height:38px;margin-bottom:10px}.audio-graphic i{height:18px;width:5px;border-radius:4px;background:var(--teal);opacity:.7}.audio-graphic i:nth-child(2),.audio-graphic i:nth-child(6){height:31px}.audio-graphic i:nth-child(3),.audio-graphic i:nth-child(5){height:24px}.audio-graphic i:nth-child(4){height:38px}.playing .audio-graphic i{animation:bars .65s ease-in-out infinite alternate}.playing .audio-graphic i:nth-child(2n){animation-delay:.2s}.playing .audio-graphic i:nth-child(3n){animation-delay:.4s}@keyframes bars{to{height:9px;opacity:1}}.audio-stage b{display:block;font-size:15px;margin:7px}.audio-stage p{margin:0 0 14px;font-size:12px;color:#aabfdd}.audio-buttons{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.audio-buttons button{min-width:120px}.audio-script{white-space:pre-wrap;margin-top:12px;padding:14px;background:#0b1a2d;border-radius:10px;border:1px solid #34516c;color:#dce8fa;font-size:13px;line-height:1.6;text-align:left}.result-icon{width:84px;height:84px;margin:9px auto 15px;display:grid;place-items:center;border-radius:24px;background:linear-gradient(135deg,#1f5452,#3b3a69);font-size:42px}.result h3{font-size:30px;margin:4px 0}.result .score{font-size:48px;font-weight:850;font-variant-numeric:tabular-nums;line-height:1.3}.result p{color:#acbed6;font-size:13px}.result .stat-row{max-width:560px;margin:20px auto}.weak-list{text-align:left;background:#0e1d31;padding:14px 17px;border:1px solid #2b4761;border-radius:14px;margin-top:15px}.weak-list h4{margin:0 0 7px;font-size:13px}.weak-list ul{margin:0;padding-left:20px;color:#b9cce1;font-size:12px}.bottom-actions{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.bottom-actions button{min-width:180px}.voice-note{font-size:11px;color:#a6b9d5;padding-top:7px}.footer{margin-top:27px;text-align:center;font-size:11px;color:#8196b0;line-height:1.7}.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);padding:11px 17px;background:#24415b;color:white;border:1px solid #5b89a6;border-radius:12px;font-size:13px;box-shadow:var(--shadow);z-index:5;max-width:min(90vw,520px)}.hidden{display:none!important}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.subline{height:1px;background:#2b405c;margin:15px 0}.loading-audio{color:#f4c67f!important}.muted{color:var(--muted)}.audio-controls{display:flex;justify-content:center;gap:13px;align-items:center;margin-top:13px}.audio-controls select{background:#10283e;color:#d5ebf5;border:1px solid #527392;border-radius:7px;padding:4px;font-size:12px}.rest-note{margin-top:12px;font-size:12px;color:var(--muted)}.session-liner{display:flex;gap:8px;align-items:center;color:#bed0e3;font-size:12px;margin-bottom:10px}.limit{font-size:11px;color:#8fa5c0}.kicker{color:var(--teal);font-size:12px;letter-spacing:.14em;font-weight:900}.bottom-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px}.bottom-metric{text-align:center;border-radius:11px;border:1px solid #28425d;padding:8px;background:#102239}.bottom-metric b{font-size:16px;display:block}.bottom-metric span{font-size:10px;color:var(--muted)}
 @media (max-width:850px){.layout-grid{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr;align-items:start}.side .panel:first-child{grid-column:1/-1}.controls{grid-template-columns:1fr 1fr}.controls .start-buttons{grid-column:1/-1}.hero{padding:24px}.main{grid-row:2}}@media (max-width:600px){.layout{padding:15px 12px 40px}.hero{padding:18px;border-radius:18px}.hero h1{font-size:25px}.brand-mark{width:42px;height:42px}.brand b{font-size:15px}.rightbrand .tag:first-child{display:none}.side{display:grid;grid-template-columns:1fr}.controls{grid-template-columns:1fr}.controls .start-buttons{grid-column:auto}.panel{padding:16px}.quest-card{padding:17px;border-radius:17px;min-height:430px}.stat-row{gap:7px}.feature-grid{gap:5px}.feature b{font-size:13px}.feature span{font-size:10px}.passage{font-size:12px;max-height:270px}.action-row button{flex:1}.bottom-actions{display:grid}.bottom-actions button{width:100%}.hero:after{right:-20px;top:40px}}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
@@ -66,9 +66,18 @@ body.mock-mode .controls{display:none}
 .part1-photo{max-width:640px;margin:12px auto 16px;border:1px solid #3f6687;border-radius:15px;overflow:hidden;background:#0b192a;box-shadow:0 10px 26px #050b1644}
 .part1-photo img{display:block;width:100%;height:auto;max-height:370px;object-fit:contain;user-select:none}
 @media(max-width:600px){.part1-photo{margin:9px auto 13px}.part1-photo img{max-height:270px}}
+/* v8: grouped question pages with shared sources shown once */
+.mock-question-block,.group-question-block{margin:16px 0;padding:15px 15px 17px;border:1px solid #344e6c;border-radius:14px;background:#11243b}
+.mock-question-block+.mock-question-block,.group-question-block+.group-question-block{margin-top:12px}
+.mock-question-label{color:#8fead4;font-size:11px;font-weight:850;letter-spacing:.08em;margin:0 0 8px}
+.mock-question-text{font-size:16px;margin:7px 0 14px;line-height:1.65}
+.mock-question-block .mock-ans,.group-question-block .option{min-height:48px;margin-bottom:7px}
+.group-question-block .answer-feedback{margin-top:10px}
+.group-note{color:#b3cbe3;font-size:12px;padding:12px}
+@media(max-width:600px){.mock-question-block,.group-question-block{padding:11px}.mock-question-text{font-size:15px}}
 </style></head>
 <body><div class="layout">
-<header class="brandbar"><div class="brand"><div class="brand-mark" aria-hidden="true">⚡</div><div><b>TOEIC QUEST</b><small>ENGLISH BATTLE ARENA</small></div></div><div class="rightbrand"><span class="tag online">● STANDALONE APP</span><span class="tag">6H / +100 TARGET</span></div></header>
+<header class="brandbar"><div class="brand"><div class="brand-mark" aria-hidden="true">⚡</div><div><b>TOEIC QUEST</b><small>ENGLISH BATTLE ARENA</small></div></div><div class="rightbrand"><span class="tag online">● STANDALONE APP</span><span class="tag">v8 · NO REPEATS</span><span class="tag">6H / +100 TARGET</span></div></header>
 <section class="hero"><div class="eyebrow">LEVEL UP YOUR SCORE</div><h1>解くほど強くなる。<br>英語力をゲームに。</h1><p>解答 → 即採点 → 解説 → 次の問題。アシスタントの返信を待たずに、リーディング・写真描写を含むリスニング・単語＆慣用句の特訓に加え、50問の時間制限付き実力診断ができます。</p></section>
 <div class="layout-grid"><aside class="side">
   <section class="panel"><div class="panel-title">⚔ BATTLE MODE</div><div class="tabbar" id="modes"><button class="tab active" data-mode="reading" type="button">📖 Reading</button><button class="tab" data-mode="listening" type="button">🎧 Listening</button><button class="tab" data-mode="vocab" type="button">📚 語彙・熟語</button><button class="tab" data-mode="mock" type="button">📝 小テスト</button></div>
@@ -104,34 +113,52 @@ function toast(t){const node=$('toast');node.textContent=t;node.classList.remove
 function active(){return state.sessions[state.mode]}
 function getDiff(){if(state.difficulty!=='auto')return Number(state.difficulty);const a=Object.entries(state.history).filter(([k,v])=>questionMap.has(k)&&questionMap.get(k).mode===state.mode).flatMap(([k,v])=>(v.log||[]).map(z=>({t:z.t,ok:z.ok}))).sort((a,b)=>b.t-a.t).slice(0,24);if(a.length<12)return state.mode==='reading'?2:1;const rate=a.filter(x=>x.ok).length/a.length;return rate>=.82?3:rate>=.55?2:1}
 function partQuotas(){const p=state.part[state.mode];if(p!=='all')return {[p]:15};if(state.mode==='reading')return {'Part 5':9,'Part 6':3,'Part 7':3};if(state.mode==='listening')return {'Part 1':3,'Part 2':6,'Part 3':3,'Part 4':3};const lv=getDiff();return lv===1?{'Silver':9,'Gold':3,'Idioms':3}:lv===3?{'Silver':3,'Gold':9,'Idioms':3}:{'Silver':7,'Gold':5,'Idioms':3}}
+// v8: sessions are drawn in complete three-question source groups.
 function draw(){
- const selected=[],diff=getDiff(),quotas=partQuotas();
- for(const [part,count] of Object.entries(quotas)){
-   const groupMap=new Map();
-   for(const q of BANK){if(q.mode!==state.mode||q.part!==part)continue;
-     const gid=q.group||q.id;
-     if(!groupMap.has(gid))groupMap.set(gid,{id:gid,questions:[],rand:Math.random()});
-     groupMap.get(gid).questions.push(q);
-   }
-   const candidates=[...groupMap.values()].map(g=>{
-     g.questions.sort((a,b)=>a.id.localeCompare(b.id));
-     g.seen=g.questions.reduce((n,q)=>n+(state.history[q.id]?.attempts||0),0);
-     g.seenItems=g.questions.filter(q=>(state.history[q.id]?.attempts||0)>0).length;
-     g.last=Math.max(...g.questions.map(q=>state.history[q.id]?.last||0));
-     g.distance=Math.min(...g.questions.map(q=>Math.abs(q.difficulty-diff)));
-     g.divisible=count%g.questions.length===0?0:1;
-     return g;
-   });
-   candidates.sort((a,b)=>a.seenItems-b.seenItems||a.seen-b.seen||a.divisible-b.divisible||a.distance-b.distance||a.last-b.last||a.rand-b.rand);
-   let assigned=0;
-   for(const g of candidates){if(assigned>=count)break;
-     for(const q of g.questions){if(assigned>=count)break;selected.push(q.id);assigned++}
-   }
- }
- return selected;
+  const selected=[],diff=getDiff(),quotas=partQuotas();
+  for(const [part,count] of Object.entries(quotas)){
+    const groupMap=new Map();
+    for(const q of BANK){if(q.mode!==state.mode||q.part!==part)continue;
+      const gid=mockGroupId(q);
+      if(!groupMap.has(gid))groupMap.set(gid,{id:gid,questions:[],rand:Math.random()});
+      groupMap.get(gid).questions.push(q);
+    }
+    const candidates=[...groupMap.values()].map(g=>{
+      g.questions.sort((a,b)=>a.id.localeCompare(b.id));
+      g.seen=g.questions.reduce((n,q)=>n+(state.history[q.id]?.attempts||0),0);
+      g.seenItems=g.questions.filter(q=>(state.history[q.id]?.attempts||0)>0).length;
+      g.last=Math.max(...g.questions.map(q=>state.history[q.id]?.last||0));
+      g.distance=Math.min(...g.questions.map(q=>Math.abs(q.difficulty-diff)));
+      g.template=sourceTemplateKey(g.questions[0]);
+      return g;
+    });
+    candidates.sort((a,b)=>a.seenItems-b.seenItems||a.seen-b.seen||a.distance-b.distance||a.last-b.last||a.rand-b.rand);
+    let assigned=0;const usedTemplates=new Set();
+    for(const g of candidates){
+      if(assigned>=count)break;
+      if(assigned+g.questions.length>count)continue;
+      if(count%3===0&&['Part 3','Part 4','Part 6','Part 7'].includes(part)&&g.questions.length!==3)continue;
+      if(usedTemplates.has(g.template))continue;
+      for(const q of g.questions){selected.push(q.id);assigned++}
+      usedTemplates.add(g.template);
+    }
+    if(assigned!==count)throw new Error('通常練習の出題候補が不足しています: '+part);
+  }
+  if(new Set(selected).size!==selected.length)throw new Error('通常練習の重複を検出しました');
+  return selected;
+}
+function sessionPage(a){
+  if(!a||a.finished)return [];
+  const first=questionMap.get(a.ids[a.index]);if(!first)return [];
+  const group=mockGroupId(first),items=[];
+  for(let i=a.index;i<a.ids.length;i++){
+    const q=questionMap.get(a.ids[i]);if(!q||mockGroupId(q)!==group)break;
+    items.push({q,index:i});
+  }
+  return items;
 }
 function makeSession(ids,review=false){stopAudio();clearTimeout(autoTimer);if(!ids.length){toast('復習対象はまだありません。新しい問題に挑戦しましょう。');return}state.sessions[state.mode]={ids,index:0,choice:null,correct:0,xp:0,streak:0,best:0,missed:[],review,started:timestamp(),finished:false,voiceUsed:false};questionStarted=Date.now();persist();render();}
-function start(){makeSession(draw(),false)}
+function start(){try{makeSession(draw(),false)}catch(e){toast('出題できません: '+e.message)}}
 function startReview(){const ids=Object.keys(state.history).filter(k=>{const h=state.history[k],q=questionMap.get(k);return q&&q.mode===state.mode&&h.weak}).sort((a,b)=>state.history[a].last-state.history[b].last).slice(0,15);makeSession(ids,true)}
 // Unofficial indicator. This is deliberately not presented as a TOEIC score conversion.
 const cap=(v,lo,hi)=>Math.min(hi,Math.max(lo,v));
@@ -208,9 +235,39 @@ function renderScore(){
  $('predEvidence').textContent=`判定：${p.quality} ／ 小テスト ${p.mn}回・初回解答 R ${p.rn}問・L ${p.ln}問・語彙 ${p.vn}問`+(p.vocabulary?' ／ 語彙補正 '+(p.vocabulary>0?'+':'')+p.vocabulary+'点':'');
  if(document.activeElement!==$('scoreBaseline'))$('scoreBaseline').value=p.base;
 }
-function choose(index){const a=active();if(!a||a.finished||a.choice!==null)return;const q=questionMap.get(a.ids[a.index]);if(index<0||index>=q.options.length)return;stopAudio();clearTimeout(autoTimer);a.choice=index;const right=index===q.answer;const responseTime=Math.max(1,Math.round((Date.now()-questionStarted)/1000));const rec=state.history[q.id]||{attempts:0,correct:0,weak:false,log:[]};const firstAttempt=rec.attempts===0;state.answerLog.push({t:Date.now(),mode:state.mode,first:firstAttempt});state.answerLog=state.answerLog.filter(e=>e.t>Date.now()-10800000).slice(-1800);rec.attempts++;rec.correct+=right?1:0;rec.weak=!right;rec.last=Date.now();rec.log=[...(rec.log||[]),{t:rec.last,ok:right,sec:responseTime}].slice(-8);state.history[q.id]=rec;recordScoreEvent(q,right,responseTime,a.review,firstAttempt);
-if(right){a.correct++;a.streak++;a.best=Math.max(a.best,a.streak);const gain=10+(a.streak%3===0?10:0);a.xp+=gain;state.xp+=gain}else{a.streak=0;a.missed.push(q.id)}persist();render();if(state.autoNext)autoTimer=setTimeout(()=>nextQuestion(),5000)}
-function nextQuestion(){clearTimeout(autoTimer);const a=active();if(!a||a.choice===null||a.finished)return;a.index++;a.choice=null;questionStarted=Date.now();if(a.index>=a.ids.length){a.finished=true;if(!a.review&&a.correct/a.ids.length>=.8)state.level[state.mode]++;}persist();render();if(!a.finished&&state.mode==='listening'&&a.voiceUsed)playAudio()}
+function choose(index,targetId){
+  const a=active();if(!a||a.finished)return;
+  const page=sessionPage(a),isGroup=page.length>1;
+  const q=targetId?questionMap.get(targetId):page[0]?.q;
+  if(!q||!page.some(x=>x.q.id===q.id)||index<0||index>=q.options.length)return;
+  a.groupAnswers=a.groupAnswers||{};
+  if(isGroup){if(a.groupAnswers[q.id]!==undefined)return;a.groupAnswers[q.id]=index}
+  else {if(a.choice!==null)return;a.choice=index}
+  stopAudio();clearTimeout(autoTimer);
+  const right=index===q.answer;
+  const responseTime=Math.max(1,Math.round((Date.now()-questionStarted)/1000));questionStarted=Date.now();
+  const rec=state.history[q.id]||{attempts:0,correct:0,weak:false,log:[]};const firstAttempt=rec.attempts===0;
+  state.answerLog.push({t:Date.now(),mode:state.mode,first:firstAttempt});
+  state.answerLog=state.answerLog.filter(e=>e.t>Date.now()-10800000).slice(-1800);
+  rec.attempts++;rec.correct+=right?1:0;rec.weak=!right;rec.last=Date.now();rec.log=[...(rec.log||[]),{t:rec.last,ok:right,sec:responseTime}].slice(-8);
+  state.history[q.id]=rec;recordScoreEvent(q,right,responseTime,a.review,firstAttempt);
+  if(right){a.correct++;a.streak++;a.best=Math.max(a.best,a.streak);const gain=10+(a.streak%3===0?10:0);a.xp+=gain;state.xp+=gain}
+  else{a.streak=0;a.missed.push(q.id)}
+  persist();render();
+  const allAnswered=page.every(x=>isGroup?a.groupAnswers[x.q.id]!==undefined:a.choice!==null);
+  if(state.autoNext&&allAnswered)autoTimer=setTimeout(()=>nextQuestion(),5000);
+}
+function nextQuestion(){
+  clearTimeout(autoTimer);
+  const a=active();if(!a||a.finished)return;
+  const page=sessionPage(a),isGroup=page.length>1;
+  const ready=page.every(x=>isGroup?a.groupAnswers?.[x.q.id]!==undefined:a.choice!==null);
+  if(!ready){toast('このページのすべての設問に解答してください。');return}
+  a.index+=page.length;a.choice=null;questionStarted=Date.now();
+  if(a.index>=a.ids.length){a.finished=true;if(!a.review&&a.correct/a.ids.length>=.8)state.level[state.mode]++}
+  persist();render();
+  if(!a.finished&&state.mode==='listening'&&a.voiceUsed)playAudio();
+}
 function goMode(mode){if(mode!==state.mode){stopAudio();clearTimeout(autoTimer);state.mode=mode;persist();render()}}
 function choosePart(v){state.part[state.mode]=v;persist();render()}
 function renderControls(){document.body.classList.toggle('mock-mode',state.mode==='mock');document.querySelectorAll('[data-mode]').forEach(el=>{const on=el.dataset.mode===state.mode;el.classList.toggle('active',on);el.setAttribute('aria-pressed',String(on))});if(state.mode==='mock'){renderMockControls();return;}const parts=state.mode==='reading'?['all','Part 5','Part 6','Part 7']:state.mode==='listening'?['all','Part 1','Part 2','Part 3','Part 4']:['all','Silver','Gold','Idioms'];const opts=parts.map(p=>`<option value="${escape(p)}">${p==='all'?'総合（15問）':state.mode==='vocab'?({'Silver':'銀レベル相当（基礎）','Gold':'金レベル相当（標準）','Idioms':'慣用句・熟語'}[p]):p+' のみ'}</option>`).join('');$('partFilter').innerHTML=opts;$('partFilter').value=state.part[state.mode];$('difficulty').value=state.difficulty;$('autoNext').checked=state.autoNext;$('modeHeading').textContent=state.mode==='reading'?'READING QUEST':state.mode==='listening'?'LISTENING QUEST':'VOCAB QUEST';$('modePill').textContent=state.mode==='reading'?'PART 5 · 6 · 7':state.mode==='listening'?'PART 2 · 3 · 4':'SILVER · GOLD · IDIOMS';$('tips').textContent=state.mode==='reading'?'Part 5は30秒/問を目安に。Part 7は設問を先読みして根拠を探しましょう。':state.mode==='listening'?'Part 2は疑問詞を聞き逃さないことが重要。スクリプトは答えた後に確認しましょう。':'銀レベル相当の基礎語彙から始め、金レベル相当・慣用句へ進みます。著作権のある教材の転載ではありません。';$('startBtn').textContent='▶ 新しい15問バトルを開始';const weak=Object.entries(state.history).filter(([k,h])=>questionMap.get(k)?.mode===state.mode&&h.weak).length;$('reviewBtn').textContent=`↻ 間違えた問題を復習 (${weak})`;$('reviewBtn').disabled=weak===0;
@@ -222,7 +279,7 @@ const modeHist=Object.entries(state.history).filter(([k])=>questionMap.get(k)?.m
  const relevantParts=state.mode==='reading'?['Part 5','Part 6','Part 7']:state.mode==='listening'?['Part 1','Part 2','Part 3','Part 4']:['Silver','Gold','Idioms'];
  $('bankSummary').textContent='問題バンク：'+inMode.length.toLocaleString()+'問（'+relevantParts.map(part=>part+' '+inMode.filter(q=>q.part===part).length+'問・未出題'+inMode.filter(q=>q.part===part&&!(state.history[q.id]?.attempts)).length+'問').join(' / ')+'）';
  $('totalXp').textContent=state.xp.toLocaleString();$('levelText').textContent='LV.'+state.level[state.mode];const min=Math.floor(state.studySeconds/60),pct=Math.min(100,Math.round(state.studySeconds/21600*100));$('studyTime').textContent=`${min}分 / 360分`;$('percentTime').textContent=pct+'%';$('timeProgress').style.width=pct+'%';renderScore()}
-function render(){renderControls();if(state.mode==='mock'){renderMock();return}const a=active();if(!a){renderHome();return}if(a.finished){renderResult(a);return}renderQuestion(a)}
+function render(){renderControls();if(state.mode==='mock'){renderMock();return}const a=active();if(!a){renderHome();return}if(a.finished){renderResult(a);return}const page=sessionPage(a);if(page.length>1){renderGroupQuestion(a,page);return}renderQuestion(a)}
 function renderHome(){const reading=state.mode==='reading',partCount=BANK.filter(q=>q.mode===state.mode).length;const info=reading?'空欄補充・文書読解・複数情報の照合':state.mode==='listening'?'間隔を調整できる英語音声・会話理解・アナウンス読解':'TOEIC頻出の単語・慣用句を4択で高速暗記。銀・金レベル相当のオリジナル問題';$('game').innerHTML=`<div class="welcome center"><div class="welcome-art">${reading?'📖':state.mode==='listening'?'🎧':'📚'}</div><div class="kicker">${reading?'READING TRAINING':state.mode==='listening'?'LISTENING TRAINING':'VOCABULARY TRAINING'}</div><h3>Ready for the next quest?</h3><p>${info}をゲーム形式で練習。<strong>${partCount.toLocaleString()}問</strong>の問題バンクから未出題を優先して選びます。15問ごとに次のセットへ進めます。</p><div class="feature-grid"><div class="feature"><b>15 QUESTIONS</b><span>1ステージ</span></div><div class="feature"><b>INSTANT FEEDBACK</b><span>即時採点と解説</span></div><div class="feature"><b>NO WAITING</b><span>未出題から優先</span></div></div><button type="button" class="btn btn-primary" id="homeStart">▶ トレーニングを始める</button>${state.mode==='listening'?'<p class="rest-note">🔊 英語音声を選択・試聴できます。番号・本文・質問の間隔も調整可能です。</p>':state.mode==='vocab'?'<p class="rest-note">金のフレーズ・銀のフレーズに掲載された単語や例文の直接転載ではありません。</p>':''}</div>`;$('homeStart').onclick=start}
 function readingPassage(q){return q.passage?`<div class="passage" aria-label="問題文">${escape(q.passage)}</div>`:''}
 function audioTranscript(q){if(q.part==='Part 1')return q.options.map((r,i)=>'('+String.fromCharCode(65+i)+') '+r).join('\n');if(q.part==='Part 2')return `${q.prompt}\n\n${q.responses.map((r,i)=>'('+String.fromCharCode(65+i)+') '+r).join('\n')}`;return q.audio.map(x=>`${x.who}: ${x.text}`).join('\n')}
@@ -233,6 +290,27 @@ const script=answered&&isAudio?`<div class="audio-script">${escape(audioTranscri
 const feedback=answered?`<section class="answer-feedback" role="status"><div class="feedback-head"><strong class="${correct?'good-txt':'bad-txt'}">${correct?'✓ CORRECT!':'✕ INCORRECT'}</strong><strong class="${correct?'good-txt':'bad-txt'}">${correct?'+'+(a.streak%3===0?20:10)+' XP':'+0 XP'}</strong></div><div class="feedback-body"><b>正解：${String.fromCharCode(65+q.answer)}${q.part!=='Part 2'&&q.part!=='Part 1'?' — '+escape(q.options[q.answer]):''}</b><div>${escape(q.explanation)}</div>${script}<div class="score-feedback">${a.review?'復習（予測値に反映しません）':'非公式予測 '+scoreEstimate().total+'点'+(state.scoreLastChange?'（今回 '+(state.scoreLastChange>0?'+':'')+state.scoreLastChange+'点）':'（今回の変動なし）')}</div></div></section><div class="action-row"><button type="button" class="btn btn-primary" id="nextBtn">${a.index===a.ids.length-1?'結果を見る →':'次の問題へ →'}</button></div>${state.autoNext?'<div class="keyboard">自動進行オン：解説の表示後、約5秒で次の問題へ</div>':''}`:'';
 $('game').innerHTML=`<div class="challenge-meta"><span class="q-no">${a.review?'REVIEW':'LEVEL '+state.level[state.mode]} · QUESTION ${a.index+1} / ${a.ids.length}</span><span class="flexspacer"></span><span class="combo">🔥 ${a.streak} COMBO</span></div><div class="progress-track"><div class="progress-fill" style="width:${a.index/a.ids.length*100}%"></div></div><div class="progress-meta"><span>STAGE PROGRESS</span><span>${a.correct} 正解</span></div><div class="question-head" style="margin-top:22px"><span class="part">${escape(q.part)}</span><span class="skill">/ ${escape(q.skill)}</span><span class="flexspacer"></span><span class="limit">${isAudio?'英語音声を聞いて選択':'目安：30秒/問（読解は余裕を持って）'}</span></div>${isAudio?(q.part==='Part 1'?photoView(q):'')+audioView(q):q.mode==='vocab'?`<div class="vocab-card"><div><small>${q.part==='Silver'?'SILVER · 基礎':q.part==='Gold'?'GOLD · 標準':'IDIOMS · 熟語'}</small><strong>${escape(q.term)}</strong></div></div>`:readingPassage(q)}<div class="question-text">${escape(q.question)}</div><div class="options">${options}</div>${feedback}<div class="keyboard">ショートカット：1〜4 または A〜D で解答 / Enter で次へ${isAudio?' / Spaceで再生':''}</div>`;
 document.querySelectorAll('[data-option]').forEach(el=>el.onclick=()=>choose(Number(el.dataset.option)));if(answered){$('nextBtn').onclick=nextQuestion}if(isAudio){$('playBtn').onclick=()=>audioPlaying?stopAudio():playAudio();$('stopBtn').onclick=()=>stopAudio();$('voiceRate').value=String(state.rate);$('voiceRate').onchange=e=>{state.rate=Number(e.target.value);persist();if(audioPlaying)playAudio()};$('pauseMode').value=state.pauseMode||'standard';$('pauseMode').onchange=e=>{state.pauseMode=e.target.value;persist();if(audioPlaying)playAudio()};$('voiceSelect').onchange=e=>{state.voiceChoice=e.target.value;persist();if(audioPlaying)playAudio();else refreshVoiceMenu()};$('voicePreviewBtn').onclick=previewVoice;refreshVoiceMenu()}
+}
+function renderGroupQuestion(a,page){
+  const q=page[0].q,groupAnswers=a.groupAnswers||{},isAudio=q.mode==='listening';
+  const allAnswered=page.every(({q:item})=>groupAnswers[item.id]!==undefined);
+  const end=page.at(-1).index+1,progress=a.index/a.ids.length*100;
+  const source=isAudio?audioView(q):readingPassage(q);
+  const blocks=page.map(({q:item,index})=>{
+    const choice=groupAnswers[item.id],answered=choice!==undefined,correct=answered&&choice===item.answer;
+    const opts=item.options.map((op,i)=>{
+      const classes=['option'];if(answered&&i===item.answer)classes.push('good');else if(answered&&i===choice)classes.push('bad');
+      return `<button type="button" class="${classes.join(' ')}" data-group-question="${escape(item.id)}" data-group-option="${i}" ${answered?'disabled':''}><span class="letter">${String.fromCharCode(65+i)}</span><span>${escape(op)}</span>${answered&&i===item.answer?' ✓':answered&&i===choice?' ✕':''}</button>`;
+    }).join('');
+    const feedback=answered?`<section class="answer-feedback"><div class="feedback-head"><strong class="${correct?'good-txt':'bad-txt'}">${correct?'✓ 正解':'✕ 不正解'}</strong></div><div class="feedback-body"><b>正解：${String.fromCharCode(65+item.answer)} — ${escape(item.options[item.answer])}</b><div>${escape(item.explanation)}</div></div></section>`:'';
+    return `<section class="group-question-block"><div class="mock-question-label">QUESTION ${index+1} / ${a.ids.length}</div><div class="question-text mock-question-text">${escape(item.question)}</div><div class="options">${opts}</div>${feedback}</section>`;
+  }).join('');
+  const done=page.filter(({q:item})=>groupAnswers[item.id]!==undefined).length;
+  const finish=allAnswered?`<div class="action-row"><button class="btn btn-primary" id="nextBtn" type="button">${end>=a.ids.length?'結果を見る →':'次の文章・音声へ →'}</button></div>${isAudio?`<div class="audio-script">${escape(audioTranscript(q))}</div>`:''}`:`<p class="group-note">この題材には${page.length}問あります。回答済み ${done}/${page.length}問。すべて回答すると次へ進めます。</p>`;
+  $('game').innerHTML=`<div class="challenge-meta"><span class="q-no">${a.review?'REVIEW':'LEVEL '+state.level[state.mode]} · QUESTION ${a.index+1}〜${end} / ${a.ids.length}</span><span class="flexspacer"></span><span class="combo">🔥 ${a.streak} COMBO</span></div><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><div class="progress-meta"><span>STAGE PROGRESS</span><span>${a.correct} 正解</span></div><div class="question-head" style="margin-top:22px"><span class="part">${escape(q.part)}</span><span class="skill">/ ${escape(q.skill)}</span><span class="flexspacer"></span><span class="pill">共通${isAudio?'音声':'文章'}・${page.length}問</span></div>${source}${blocks}${finish}<div class="keyboard">同一の会話・文章の設問をまとめて表示しています。${isAudio?'音声は何度でも再生できます。':''}</div>`;
+  document.querySelectorAll('[data-group-question]').forEach(el=>el.onclick=()=>choose(Number(el.dataset.groupOption),el.dataset.groupQuestion));
+  if(allAnswered)$('nextBtn').onclick=nextQuestion;
+  if(isAudio){$('playBtn').onclick=()=>audioPlaying?stopAudio():playAudio();$('stopBtn').onclick=()=>stopAudio();$('voiceRate').value=String(state.rate);$('voiceRate').onchange=e=>{state.rate=Number(e.target.value);persist();if(audioPlaying)playAudio()};$('pauseMode').value=state.pauseMode||'standard';$('pauseMode').onchange=e=>{state.pauseMode=e.target.value;persist();if(audioPlaying)playAudio()};$('voiceSelect').onchange=e=>{state.voiceChoice=e.target.value;persist();if(audioPlaying)playAudio();else refreshVoiceMenu()};$('voicePreviewBtn').onclick=previewVoice;refreshVoiceMenu()}
 }
 function renderResult(a){const pct=Math.round(a.correct/a.ids.length*100),clear=pct>=80;const skills=[...new Set(a.missed.map(id=>questionMap.get(id)?.skill).filter(Boolean))];$('game').innerHTML=`<div class="result center"><div class="result-icon">${clear?'🏆':'🎯'}</div><div class="kicker">${a.review?'REVIEW RESULT':'QUEST COMPLETE'}</div><h3>${clear?'STAGE CLEAR!':'RETRY CHALLENGE'}</h3><div class="score">${a.correct} <span class="muted">/ ${a.ids.length}</span></div><p>${pct}% 正解${a.review?' · 弱点復習':' · '+(clear?'次のレベルに挑戦できます':'苦手分野を集中復習しましょう')}</p><div class="stat-row"><div class="mini-stat"><strong>${pct}%</strong><span>正答率</span></div><div class="mini-stat"><strong>+${a.xp}</strong><span>獲得XP</span></div><div class="mini-stat"><strong>${a.best}</strong><span>最大コンボ</span></div><div class="mini-stat"><strong>LV.${state.level[state.mode]}</strong><span>現在のレベル</span></div></div>${skills.length?`<div class="weak-list"><h4>今回の復習対象</h4><ul>${skills.map(s=>`<li>${escape(s)}</li>`).join('')}</ul></div>`:'<p style="color:var(--green)">今回の不正解はありません！</p>'}<div class="score-in-result"><span>参考・非公式の予測スコア</span><br><strong>${scoreEstimate().total} 点</strong><span> ／ 学習履歴からの推定（公式スコアではありません）</span></div><div class="bottom-actions"><button class="btn btn-primary" id="continueBtn">▶ 次の15問へ進む</button><button class="btn btn-secondary" id="reviewAfter">↻ 間違えた問題だけ復習</button></div><p class="rest-note">次の問題はアプリ内からすぐに出題されます。チャットへの送信は不要です。</p></div>`;$('continueBtn').onclick=start;$('reviewAfter').onclick=startReview;const weak=Object.entries(state.history).filter(([k,h])=>questionMap.get(k)?.mode===state.mode&&h.weak).length;$('reviewAfter').disabled=weak===0}
 // Voice options are sourced from the browser/OS, prioritizing natural and neural English voices.
@@ -300,8 +378,12 @@ function speakSequence(chunks){if(!('speechSynthesis' in window)||!('SpeechSynth
  next();
 }
 function playAudio(){const a=active();if(!a||a.finished)return;const q=questionMap.get(a.ids[a.index]);if(!q||q.mode!=='listening')return;
- a.voiceUsed=true;persist();speakSequence(audioSequence(q,a));
-}
+ a.voiceUsed=true;persist();const sequence=audioSequence(q,a),page=sessionPage(a);
+ if((q.part==='Part 3'||q.part==='Part 4')&&page.length>1){const p=PAUSE_PRESETS[state.pauseMode]||PAUSE_PRESETS.standard;
+  page.slice(1).forEach(({q:item,index})=>{sequence.push({text:'Question '+(index+1)+'.',who:'Narrator',wait:p.number,label:'質問番号'});sequence.push({text:item.question,who:'Narrator',wait:350,label:'質問文'})});
+ }
+ speakSequence(sequence);
+} 
 function previewVoice(){speakSequence([{text:'Welcome to TOEIC Quest. Please listen carefully to the next question.',who:'Narrator',wait:0,label:'試聴'}])}
 if('speechSynthesis' in window){const synth=window.speechSynthesis;
  if(typeof synth.addEventListener==='function')synth.addEventListener('voiceschanged',refreshVoiceMenu);
@@ -309,63 +391,131 @@ if('speechSynthesis' in window){const synth=window.speechSynthesis;
 }
 
 
-// --- v6: Timed diagnostic mini mock (original TOEIC-style practice, not an ETS test) ---
+// v8: a single exam is drawn by distinct source groups AND scenario templates.
+// One original source (conversation, announcement, email, photo) becomes one page.
 const MOCK_PARTS=[['Part 1',3],['Part 2',4],['Part 3',9],['Part 4',9],['Part 5',10],['Part 6',3],['Part 7',12]];
 const MOCK_L_COUNT=25, MOCK_TOTAL=50;
 const MOCK_L_SECONDS=15*60,MOCK_R_SECONDS=20*60;
 function mockGroupId(q){return q.group||q.id}
+function sourceTemplateKey(q){
+  if(q.part==='Part 1')return q.part+':'+(q.imageId||q.id);
+  // The X question banks contain variants of eight/seven source templates.
+  // G7X-03-11 and G7X-03-05 must not appear in the same test.
+  const id=String(q.group||q.id);
+  const match=id.match(/^(?:GL[34]X|G[67]X)-(\d{2})-\d{2}$/);
+  if(match)return q.part+':scenario-'+match[1];
+  if(q.part==='Part 2')return q.part+':'+String(q.prompt||q.id).trim().toLowerCase();
+  if(q.part==='Part 5')return q.part+':'+String(q.question||q.id).trim().toLowerCase();
+  return q.part+':'+id;
+}
 function mockDraw(){
- const ids=[];
- for(const [part,count] of MOCK_PARTS){
-   const byGroup=new Map();
-   for(const q of BANK){if(q.part!==part)continue;const key=mockGroupId(q);
-     if(!byGroup.has(key))byGroup.set(key,[]);
-     byGroup.get(key).push(q);
-   }
-   const groups=[...byGroup.values()].map(questions=>({questions:questions.sort((a,b)=>a.id.localeCompare(b.id)),seen:questions.filter(q=>state.history[q.id]?.attempts).length,rand:Math.random(),diff:Math.abs(questions[0].difficulty-2)}));
-   groups.sort((a,b)=>a.seen-b.seen||Number((count%3===0)&&a.questions.length!==3)-Number((count%3===0)&&b.questions.length!==3)||a.diff-b.diff||a.rand-b.rand);
-   let added=0;
-   for(const g of groups){if(added>=count)break;if(added+g.questions.length>count)continue;
-     g.questions.forEach(q=>ids.push(q.id));added+=g.questions.length;
-   }
-   if(added!==count)throw new Error('Mock sample shortfall: '+part);
- }
- return ids;
+  const ids=[],selectedIds=new Set(),selectedSources=new Set();
+  for(const [part,count] of MOCK_PARTS){
+    const byGroup=new Map();
+    for(const q of BANK){if(q.part!==part)continue;const key=mockGroupId(q);
+      if(!byGroup.has(key))byGroup.set(key,[]);
+      byGroup.get(key).push(q);
+    }
+    const groups=[...byGroup.values()].map(questions=>{
+      questions.sort((a,b)=>a.id.localeCompare(b.id));
+      return {questions,template:sourceTemplateKey(questions[0]),
+        seen:questions.reduce((a,q)=>a+(state.history[q.id]?.attempts||0),0),
+        recent:Math.max(0,...questions.map(q=>state.history[q.id]?.last||0)),
+        rand:Math.random(),diff:Math.abs(questions[0].difficulty-2)};
+    });
+    groups.sort((a,b)=>a.seen-b.seen||a.recent-b.recent||a.diff-b.diff||a.rand-b.rand);
+    let added=0;
+    for(const g of groups){
+      if(added>=count)break;
+      if(added+g.questions.length>count)continue; // Never split a common source
+      if(count%3===0&&['Part 3','Part 4','Part 6','Part 7'].includes(part)&&g.questions.length!==3)continue;
+      if(selectedSources.has(g.template))continue; // Never repeat a templated scenario
+      if(g.questions.some(q=>selectedIds.has(q.id)))continue;
+      g.questions.forEach(q=>{ids.push(q.id);selectedIds.add(q.id)});
+      selectedSources.add(g.template);added+=g.questions.length;
+    }
+    if(added!==count)throw new Error('小テストの出題候補が不足しています: '+part);
+  }
+  if(ids.length!==MOCK_TOTAL||new Set(ids).size!==MOCK_TOTAL)throw new Error('小テストの重複を検出しました。');
+  return ids;
+}
+function mockPage(m){
+  const idx=m.index,first=questionMap.get(m.ids[idx]);
+  if(!first)return [];
+  const group=mockGroupId(first),items=[];
+  for(let i=idx;i<m.ids.length;i++){
+    const q=questionMap.get(m.ids[i]);if(!q||mockGroupId(q)!==group)break;
+    items.push({q,index:i});
+  }
+  return items;
 }
 function startMock(){
- const old=state.mock;
- if(old&&!old.finished&&!confirm('進行中の小テストを破棄して、新しい小テストを始めますか？'))return;
- stopAudio();clearTimeout(autoTimer);
- const ids=mockDraw(),now=Date.now();
- state.mock={ids,answers:Array(ids.length).fill(null),index:0,phase:'listening',phaseStartedAt:now,startedAt:now,heard:[],finished:false,aborted:false,preScore:scoreEstimate().total};
- state.mode='mock';persist();render();
+  const old=state.mock;
+  if(old&&!old.finished&&!confirm('進行中の小テストを破棄して、新しい小テストを始めますか？'))return;
+  stopAudio();clearTimeout(autoTimer);
+  let ids;try{ids=mockDraw()}catch(e){toast('出題できません: '+e.message);return}
+  const now=Date.now();
+  state.mock={ids,answers:Array(ids.length).fill(null),index:0,phase:'listening',phaseStartedAt:now,startedAt:now,heard:[],finished:false,aborted:false,preScore:scoreEstimate().total};
+  state.mode='mock';persist();render();
 }
 function mockTime(){const m=state.mock;if(!m||m.finished)return 0;return Math.max(0,(m.phase==='listening'?MOCK_L_SECONDS:MOCK_R_SECONDS)-Math.floor((Date.now()-m.phaseStartedAt)/1000))}
 function mockTransition(){
- const m=state.mock;if(!m||m.finished)return false;
- if(mockTime()>0)return false;
- stopAudio();
- if(m.phase==='listening'){
-  m.phase='reading';m.index=MOCK_L_COUNT;m.phaseStartedAt=Date.now();persist();return true;
- }
- finishMock();return true;
+  const m=state.mock;if(!m||m.finished)return false;
+  if(mockTime()>0)return false;
+  stopAudio();
+  if(m.phase==='listening'){
+    m.phase='reading';m.index=MOCK_L_COUNT;m.phaseStartedAt=Date.now();persist();return true;
+  }
+  finishMock();return true;
 }
 function mockFormatTime(sec){return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
 function mockCurrent(){const m=state.mock;return m&&!m.finished?questionMap.get(m.ids[m.index]):null}
-function mockSelect(choice){const m=state.mock;if(!m||m.finished)return;if(mockTransition()){render();return}const q=mockCurrent();if(!q||choice<0||choice>=q.options.length)return;m.answers[m.index]=choice;persist();renderMock()}
-function mockNext(){const m=state.mock;if(!m||m.finished)return;if(mockTransition()){render();return}stopAudio();if(m.phase==='listening'&&m.index===MOCK_L_COUNT-1){m.phase='reading';m.index=MOCK_L_COUNT;m.phaseStartedAt=Date.now()}else if(m.index===MOCK_TOTAL-1){finishMock();return}else m.index++;persist();renderMock()}
-function mockPrev(){const m=state.mock;if(!m||m.finished)return;if(mockTransition()){render();return}const first=m.phase==='listening'?0:MOCK_L_COUNT;if(m.index<=first)return;stopAudio();m.index--;persist();renderMock()}
+function mockSelect(choice,questionIndex){
+  const m=state.mock;if(!m||m.finished)return;
+  if(mockTransition()){render();return}
+  const page=mockPage(m),idx=Number.isInteger(questionIndex)?questionIndex:m.index;
+  if(!page.some(x=>x.index===idx))return;
+  const q=questionMap.get(m.ids[idx]);if(!q||choice<0||choice>=q.options.length)return;
+  m.answers[idx]=choice;persist();renderMock();
+}
+function mockNext(){
+  const m=state.mock;if(!m||m.finished)return;
+  if(mockTransition()){render();return}
+  stopAudio();
+  const page=mockPage(m),next=(page.at(-1)?.index??m.index)+1;
+  if(m.phase==='listening'&&next>=MOCK_L_COUNT){m.phase='reading';m.index=MOCK_L_COUNT;m.phaseStartedAt=Date.now()}
+  else if(next>=MOCK_TOTAL){finishMock();return}
+  else m.index=next;
+  persist();renderMock();
+}
+function mockPrev(){
+  const m=state.mock;if(!m||m.finished)return;
+  if(mockTransition()){render();return}
+  const first=m.phase==='listening'?0:MOCK_L_COUNT;
+  if(m.index<=first)return;
+  stopAudio();
+  const prevIdx=m.index-1,prev=questionMap.get(m.ids[prevIdx]);
+  let pos=prevIdx;
+  while(pos>first&&mockGroupId(questionMap.get(m.ids[pos-1]))===mockGroupId(prev))pos--;
+  m.index=pos;persist();renderMock();
+}
 function abortMock(){if(!state.mock||state.mock.finished)return;if(!confirm('小テストを中断しますか？ 中断時は採点・スコア補正を行いません。'))return;stopAudio();state.mock=null;persist();renderMock()}
-function mockPlay(){const m=state.mock,q=mockCurrent();if(!m||!q||q.mode!=='listening'||mockTransition()){render();return}
- const key=mockGroupId(q);if(m.heard.includes(key)){toast('模擬試験中は各音声の再生は1度だけです。');return}
- if(!('speechSynthesis'in window)||!('SpeechSynthesisUtterance'in window)){toast('このブラウザでは音声再生ができません。');return}
- m.heard.push(key);persist();const sequence=audioSequence(q,{index:m.index});
- if(q.part==='Part 3'||q.part==='Part 4'){
-   // Questions share the original conversation; play all three prompts after it.
-   const fellow=m.ids.slice(m.index+1).map(id=>questionMap.get(id)).filter(x=>mockGroupId(x)===key);
-   fellow.forEach((item,j)=>{sequence.push({text:'Question '+(m.index+j+2)+'.',who:'Narrator',wait:PAUSE_PRESETS[state.pauseMode]?.number||850,label:'質問番号'});sequence.push({text:item.question,who:'Narrator',wait:350,label:'質問文'})});
- }
- speakSequence(sequence);const b=$('mockPlayBtn');if(b){b.disabled=true;b.textContent='✓ 再生済み（再生は1回）'}
+function mockPlay(){
+  const m=state.mock,q=mockCurrent();if(!m||!q||q.mode!=='listening'||mockTransition()){render();return}
+  const page=mockPage(m),key=mockGroupId(q);
+  if(m.heard.includes(key)){toast('模擬試験では1つの音声につき再生は1度だけです。');return}
+  if(!('speechSynthesis'in window)||!('SpeechSynthesisUtterance'in window)){toast('このブラウザでは音声再生ができません。');return}
+  m.heard.push(key);persist();
+  const sequence=audioSequence(q,{index:m.index}),p=PAUSE_PRESETS[state.pauseMode]||PAUSE_PRESETS.standard;
+  if(q.part==='Part 3'||q.part==='Part 4'){
+    // Read all questions attached to this conversation once, on this one page.
+    page.slice(1).forEach(({q:item,index})=>{
+      sequence.push({text:'Question '+(index+1)+'.',who:'Narrator',wait:p.number,label:'質問番号'});
+      sequence.push({text:item.question,who:'Narrator',wait:350,label:'質問文'});
+    });
+  }
+  speakSequence(sequence);
+  const b=$('mockPlayBtn');if(b){b.disabled=true;b.textContent='✓ 再生済み（再生は1回）'}
 }
 function mockScoreTarget(correct,total){
  // Learning calibration only: a 25-item sample is not an official scaled-score conversion.
@@ -410,24 +560,31 @@ function renderMockControls(){
  renderScore();
 }
 function renderMock(){
- const m=state.mock;
- if(!m){renderMockHome();return}
- if(m.finished){renderMockResult(m);return}
- if(mockTransition()){render();return}
- const q=mockCurrent();if(!q){toast('問題を取得できませんでした。');return}
- const remaining=mockTime(),answered=m.answers[m.index],isL=m.phase==='listening',key=mockGroupId(q),played=m.heard.includes(key);
- const doneSection=m.answers.slice(isL?0:25,isL?25:50).filter(x=>x!==null).length;
- const phaseN=isL?25:25,phaseNo=isL?m.index+1:m.index-24;
- const options=q.options.map((op,i)=>`<button class="mock-ans ${answered===i?'selected':''}" type="button" data-mock-option="${i}"><span class="letter">${String.fromCharCode(65+i)}</span><span>${q.part==='Part 1'?'写真説明を聞く':q.part==='Part 2'?'応答を聞く':escape(op)}</span>${answered===i?'<b style="margin-left:auto">✓</b>':''}</button>`).join('');
- const passage=isL?`${q.part==='Part 1'?photoView(q):''}<div class="mock-audio" id="audioStage"><b>🎧 ${escape(q.part)} · ${played?'音声は再生済み':'音声を1回だけ再生できます'}</b><p id="audioStatus" class="mock-note">${played?'この問題の会話・応答は再生済みです。':'再生ボタンを押して解答してください。'}</p><button id="mockPlayBtn" type="button" class="btn btn-secondary" ${played?'disabled':''}>${played?'✓ 再生済み（1回のみ）':'▶ 音声を再生（1回）'}</button><p class="mock-note">Part 3・4は同じ音声から3問出題します。音声と正解は解答中に表示されません。</p></div>`:q.passage?`<div class="passage mock-passage">${escape(q.passage)}</div>`:'';
- $('game').innerHTML=`<div class="mock-live"><div><b>${isL?'🎧 LISTENING SECTION':'📖 READING SECTION'}</b><div class="mock-note">${isL?'Part 1・2・3・4':'Part 5・6・7'} ／ ${phaseNo} / ${phaseN} 問 · 回答済 ${doneSection}問</div></div><div><div id="mockTimer" class="mock-timer ${remaining<=60?'urgent':''}">${mockFormatTime(remaining)}</div><div class="mock-note">このセクションの残り時間</div></div></div><div class="progress-track"><div class="progress-fill" style="width:${m.index/50*100}%"></div></div><div class="question-head" style="margin-top:19px"><span class="part">${escape(q.part)}</span><span class="skill">${escape(q.skill)}</span><span class="flexspacer"></span><span class="pill">全50問中 ${m.index+1}問目</span></div>${passage}<div class="question-text">${escape(q.question)}</div><div class="options">${options}</div><p class="mock-feedback-hidden">解答の正誤は最後の結果画面でまとめて表示します。選択肢はあとから変更できます。</p><div class="mock-nav"><button type="button" class="btn btn-ghost" id="mockPrev" ${phaseNo===1?'disabled':''}>← 前の問題</button><button type="button" class="btn btn-primary" id="mockNext">${m.index===49?'試験を終了して採点 →':m.index===24?'Readingへ進む →':'次の問題 →'}</button></div><button type="button" class="btn btn-ghost" style="font-size:11px" id="mockAbort">途中終了（採点しない）</button><p class="mock-note" style="margin-top:10px">音声は端末の英語音声合成を利用します。時間は画面を離れても経過します。未回答は不正解として採点されます。</p>`;
- document.querySelectorAll('[data-mock-option]').forEach(el=>el.onclick=()=>mockSelect(Number(el.dataset.mockOption)));
- $('mockPrev').onclick=mockPrev;$('mockNext').onclick=mockNext;$('mockAbort').onclick=abortMock;
- if(isL)$('mockPlayBtn').onclick=mockPlay;
+  const m=state.mock;
+  if(!m){renderMockHome();return}
+  if(m.finished){renderMockResult(m);return}
+  if(mockTransition()){render();return}
+  const page=mockPage(m),q=page[0]?.q;
+  if(!q){toast('問題を取得できませんでした。');return}
+  const remaining=mockTime(),isL=m.phase==='listening',played=m.heard.includes(mockGroupId(q));
+  const start=isL?0:MOCK_L_COUNT,end=isL?MOCK_L_COUNT:MOCK_TOTAL;
+  const doneSection=m.answers.slice(start,end).filter(x=>x!==null).length;
+  const numbers=page.map(x=>x.index+1),questionLabel=numbers.length>1?`${numbers[0]}〜${numbers.at(-1)}`:String(numbers[0]);
+  const options=q.mode==='listening';
+  const passage=isL?`${q.part==='Part 1'?photoView(q):''}<div class="mock-audio" id="audioStage"><b>🎧 ${escape(q.part)} · ${played?'音声は再生済み':'音声は1回のみ再生できます'}</b><p id="audioStatus" class="mock-note">${played?'この音声は再生済みです。':'再生ボタンを押してください。共通音声の設問はこのページにまとめています。'}</p><button id="mockPlayBtn" type="button" class="btn btn-secondary" ${played?'disabled':''}>${played?'✓ 再生済み（1回のみ）':'▶ 音声を再生（1回）'}</button><p class="mock-note">設問の答えと会話のスクリプトは終了後に表示します。</p></div>`:q.passage?`<div class="passage mock-passage">${escape(q.passage)}</div>`:'';
+  const questions=page.map(({q:item,index})=>{
+    const answered=m.answers[index],desc=item.part==='Part 1'?'写真の説明を選んでください':item.part==='Part 2'?'最も適切な応答を選んでください':item.question;
+    const buttons=item.options.map((op,i)=>`<button class="mock-ans ${answered===i?'selected':''}" type="button" data-mock-index="${index}" data-mock-option="${i}"><span class="letter">${String.fromCharCode(65+i)}</span><span>${item.part==='Part 1'?'写真説明を聞く':item.part==='Part 2'?'応答を聞く':escape(op)}</span>${answered===i?'<b style="margin-left:auto">✓</b>':''}</button>`).join('');
+    return `<section class="mock-question-block" data-question-number="${index+1}"><div class="mock-question-label">QUESTION ${index+1} / 50　${answered!==null?'✓ 解答済み':'未回答'}</div><div class="question-text mock-question-text">${escape(desc)}</div><div class="options">${buttons}</div></section>`;
+  }).join('');
+  $('game').innerHTML=`<div class="mock-live"><div><b>${isL?'🎧 LISTENING SECTION':'📖 READING SECTION'}</b><div class="mock-note">${isL?'Part 1・2・3・4':'Part 5・6・7'} ／ ${isL?`${numbers[0]}〜${numbers.at(-1)} / 25`: `${numbers[0]-25}〜${numbers.at(-1)-25} / 25`} 問 · 回答済 ${doneSection}問</div></div><div><div id="mockTimer" class="mock-timer ${remaining<=60?'urgent':''}">${mockFormatTime(remaining)}</div><div class="mock-note">このセクションの残り時間</div></div></div><div class="progress-track"><div class="progress-fill" style="width:${m.index/50*100}%"></div></div><div class="question-head" style="margin-top:19px"><span class="part">${escape(q.part)}</span><span class="skill">${escape(q.skill)}</span><span class="flexspacer"></span><span class="pill">${numbers.length>1?'共通題材 '+numbers.length+'問': '1問'} / 全50問</span></div>${passage}${questions}<div class="mock-nav"><button id="mockPrev" type="button" class="btn btn-secondary" ${m.index===start?'disabled':''}>← 前の${numbers.length>1?'ページ':'問題'}</button><button id="mockNext" type="button" class="btn btn-primary">${numbers.at(-1)===50?'採点する →':(isL&&numbers.at(-1)===25)?'Readingへ進む →':'次のページへ →'}</button></div><div class="mock-feedback-hidden">※ 同じ会話・文章の設問はまとめて表示します。選択した回答は後から変更できます。採点は最後に一括で行います。</div><button type="button" class="btn btn-ghost" id="mockAbort" style="margin-top:8px">テストを中断する</button>`;
+  document.querySelectorAll('[data-mock-option]').forEach(el=>el.onclick=()=>mockSelect(Number(el.dataset.mockOption),Number(el.dataset.mockIndex)));
+  $('mockPrev').onclick=mockPrev;$('mockNext').onclick=mockNext;$('mockAbort').onclick=abortMock;
+  if(isL)$('mockPlayBtn').onclick=mockPlay;
 }
 function renderMockHome(){
  const last=(state.mockResults||[]).at(-1);
- $('game').innerHTML=`<div class="welcome center"><div class="welcome-art">📝</div><div class="kicker">SCORE DIAGNOSTIC</div><h3>本番形式・実力診断小テスト</h3><p>50問・35分の縮小版模試です。通常練習よりも小テストの結果を重視し、予測スコアを大きく上下させます。</p><div class="mock-guide"><h3>試験の流れ</h3><div class="mock-pillrow"><span>🎧 Listening 25問 / 15分</span><span>📖 Reading 25問 / 20分</span><span>合計50問</span></div><p>Part 1：3問、Part 2：4問、Part 3：9問、Part 4：9問 ／ Part 5：10問、Part 6：3問、Part 7：12問。開始後は制限時間が進み、途中の正解表示はありません。終了時に一括採点し、予測スコアを更新します。</p><p class="mock-note">本番の200問・120分を縮小した独自テストです。Part 1は自作画像の写真描写（3問）です。Part 6は各文書3問のため本番（4問）と異なります。音声はブラウザによる合成で、本番の録音とは異なります。</p></div>${last?`<p class="mock-note">前回：${last.lCorrect+last.rCorrect}/50問正解 · ${new Date(last.t).toLocaleDateString('ja-JP')} ／ 現在の非公式予測 ${scoreEstimate().total}点</p>`:''}<button class="btn btn-primary" type="button" id="mockStart">▶ 50問の小テストを始める</button></div>`;
+ $('game').innerHTML=`<div class="welcome center"><div class="welcome-art">📝</div><div class="kicker">SCORE DIAGNOSTIC</div><h3>本番形式・実力診断小テスト</h3><p>50問・35分の縮小版模試です。同じ題材・同じテンプレートは1回のテストで重複せず、共通の音声や文章から出る3問は1ページにまとめます。通常練習よりも小テストの結果を重視し、予測スコアを大きく上下させます。</p><div class="mock-guide"><h3>試験の流れ</h3><div class="mock-pillrow"><span>🎧 Listening 25問 / 15分</span><span>📖 Reading 25問 / 20分</span><span>合計50問</span></div><p>Part 1：3問、Part 2：4問、Part 3：9問、Part 4：9問 ／ Part 5：10問、Part 6：3問、Part 7：12問。開始後は制限時間が進み、途中の正解表示はありません。終了時に一括採点し、予測スコアを更新します。</p><p class="mock-note">本番の200問・120分を縮小した独自テストです。Part 1は自作画像の写真描写（3問）です。Part 6は各文書3問のため本番（4問）と異なります。音声はブラウザによる合成で、本番の録音とは異なります。</p></div>${last?`<p class="mock-note">前回：${last.lCorrect+last.rCorrect}/50問正解 · ${new Date(last.t).toLocaleDateString('ja-JP')} ／ 現在の非公式予測 ${scoreEstimate().total}点</p>`:''}<button class="btn btn-primary" type="button" id="mockStart">▶ 50問の小テストを始める</button></div>`;
  $('mockStart').onclick=startMock;
 }
 function renderMockResult(m){
@@ -442,7 +599,20 @@ function renderMockResult(m){
 $('modes').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(b)goMode(b.dataset.mode)});
 $('partFilter').addEventListener('change',e=>choosePart(e.target.value));$('difficulty').addEventListener('change',e=>{state.difficulty=e.target.value;persist()});$('autoNext').addEventListener('change',e=>{state.autoNext=e.target.checked;persist();if(!state.autoNext)clearTimeout(autoTimer)});
 $('startBtn').onclick=()=>{const s=active();if(s&&!s.finished&&!confirm('進行中のステージを終了し、新しい問題を始めますか？'))return;start()};$('reviewBtn').onclick=()=>{const s=active();if(s&&!s.finished&&!confirm('進行中のステージを終了し、復習に切り替えますか？'))return;startReview()};$('baselineBtn').onclick=()=>{const input=$('scoreBaseline'),raw=Number(input.value);if(!Number.isFinite(raw)||raw<10||raw>990||raw%5!==0){toast('基準スコアは10〜990点の5点刻みで入力してください。');return;}state.baseScore=raw;state.scoreLastChange=0;persist();render();toast('基準スコアを変更しました。既存の練習履歴は保持します。')};$('scoreBaseline').addEventListener('keydown',e=>{if(e.key==='Enter')$('baselineBtn').click()});$('resetBtn').onclick=()=>{if(confirm('このブラウザに保存された学習履歴・XP・タイマー・小テスト結果をすべて初期化しますか？')){stopAudio();clearTimeout(autoTimer);state=initial();persist();render();toast('学習記録を初期化しました')}};
-document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','SELECT','TEXTAREA','BUTTON'].includes(document.activeElement?.tagName))return;const a=active();if(!a||a.finished)return;const q=questionMap.get(a.ids[a.index]);if(a.choice===null){const v=/^[1-4]$/.test(e.key)?Number(e.key)-1:/^[a-d]$/i.test(e.key)?e.key.toUpperCase().charCodeAt(0)-65:-1;if(v>=0){e.preventDefault();choose(v)}else if(e.code==='Space'&&q.mode==='listening'){e.preventDefault();audioPlaying?stopAudio():playAudio()}}else if(e.key==='Enter'){e.preventDefault();nextQuestion()}});
+document.addEventListener('keydown',e=>{
+ if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','SELECT','TEXTAREA','BUTTON'].includes(document.activeElement?.tagName))return;
+ if(state.mode==='mock')return;
+ const a=active();if(!a||a.finished)return;
+ const page=sessionPage(a);if(!page.length)return;
+ const q=page[0].q;
+ if(e.key===' '&&q.mode==='listening'){e.preventDefault();if(audioPlaying)stopAudio();else playAudio();return}
+ if(e.key==='Enter'){if(page.length>1){if(page.every(x=>a.groupAnswers?.[x.q.id]!==undefined)){e.preventDefault();nextQuestion()}}else if(a.choice!==null){e.preventDefault();nextQuestion()}return}
+ const key=e.key.toUpperCase();const choice=/^[1-4]$/.test(key)?Number(key)-1:'ABCD'.indexOf(key);
+ if(choice>=0&&choice<=3){
+   if(page.length>1){const target=page.find(x=>a.groupAnswers?.[x.q.id]===undefined);if(target){e.preventDefault();choose(choice,target.q.id)}}
+   else if(a.choice===null){e.preventDefault();choose(choice)}
+ }
+});
 window.addEventListener('beforeunload',()=>{stopAudio();persist()});
 // Track only question-solving time in a visible tab, not idle time after a question was answered.
 setInterval(()=>{if(state.mock&&!state.mock.finished){const changed=mockTransition();if(changed){if(state.mode==='mock')render();}else if(state.mode==='mock'){const t=$('mockTimer');if(t){const left=mockTime();t.textContent=mockFormatTime(left);t.classList.toggle('urgent',left<=60)}}}const a=active();if(((a&&!a.finished&&a.choice===null)||(state.mode==='mock'&&state.mock&&!state.mock.finished))&&document.visibilityState==='visible'){state.studySeconds++;if(state.studySeconds%10===0)persist();const minutes=Math.floor(state.studySeconds/60),pct=Math.min(100,Math.round(state.studySeconds/21600*100));$('studyTime').textContent=`${minutes}分 / 360分`;$('percentTime').textContent=pct+'%';$('timeProgress').style.width=pct+'%'}},1000);
