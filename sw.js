@@ -1,11 +1,11 @@
-/* TOEIC QUEST v9: network-first navigation, offline fallback. */
-const CACHE_NAME='toeic-quest-v9-shell';
+/* English Quest v10: network-first navigation, offline fallback. */
+const CACHE_NAME='english-quest-v10-shell';
 const SHELL=['./','./index.html','./manifest.webmanifest','./icon-192.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));
 });
 self.addEventListener('activate',event=>{
-  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('toeic-quest-')&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>(key.startsWith('toeic-quest-')||key.startsWith('english-quest-'))&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));
 });
 self.addEventListener('fetch',event=>{
   const req=event.request;

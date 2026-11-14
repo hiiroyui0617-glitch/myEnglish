@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "TOEIC QUEST — 英語学習",
-  "short_name": "TOEIC QUEST",
-  "description": "オリジナルTOEIC Reading・Listening・語彙・小テスト演習",
+  "name": "English Quest — 英語学習",
+  "short_name": "English Quest",
+  "description": "独立制作の非公式英語学習アプリ。リーディング・リスニング・語彙・小テスト。",
   "lang": "ja",
   "dir": "ltr",
   "start_url": "./",
