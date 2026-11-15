@@ -43,12 +43,12 @@ function pickTopic(){
  if(!available.length){data.topicsSeen=[];available=TOPICS;}
  const topic=available[randomIndex(available.length)];data.topicsSeen.push(topic.id);return topic;
 }
-function begin(mode){
+function begin(mode,fromUserAction=false){
  const previous=data.sessions[mode];if(previous?.turns){data.archives=data.archives||{speaking:[],writing:[]};data.archives[mode]=[...(data.archives[mode]||[]),previous].slice(-30);}
  const topic=pickTopic();
  data.sessions[mode]={topicId:topic.id,started:now(),turns:0,followupIndex:0,messages:[{role:'assistant',text:topic.opening,engine:'guided'}]};
  lastStatus='新しいトピックを開始しました。';save();refresh();
- if(mode==='speaking'&&data.settings.autoSpeak)say(topic.opening);
+ if(mode==='speaking'&&data.settings.autoSpeak&&fromUserAction)say(topic.opening);
 }
 function ensure(mode){if(!data.sessions[mode])begin(mode);return data.sessions[mode]}
 function status(message){
@@ -305,7 +305,7 @@ function render(ctx){
  '<div class="studio-actions">'+(isSpeaking?'<button class="btn btn-secondary" id="studioRecord" type="button">'+(recorder?.state==='recording'?'■ 録音を終了':'🎙 録音する')+'</button>':'')+
  '<button class="btn btn-primary" id="studioSend" type="button"'+(working?' disabled':'')+'>➤ 送信して会話を続ける</button></div></div>'+
  '<div class="studio-status" id="studioStatus" role="status">'+esc(statusText)+'</div>'+settingsHTML()+'</div>';
- el('studioNew').onclick=()=>{if(working)return;if(s.turns&&!confirm('新しい話題を始めますか？ 現在の会話は履歴エクスポートまで保持されますが、画面からは切り替わります。'))return;pause();clearAudio();begin(mode);};
+ el('studioNew').onclick=()=>{if(working)return;if(s.turns&&!confirm('新しい話題を始めますか？ 現在の会話は履歴エクスポートまで保持されますが、画面からは切り替わります。'))return;pause();clearAudio();begin(mode,true);};
  el('studioSend').onclick=send;
  el('studioInput').onkeydown=e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();send();}};
  el('studioEngine').onchange=e=>{data.settings.engine=e.target.value;save();refresh();};
