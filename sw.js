@@ -1,6 +1,6 @@
-/* English Quest v12: network-first navigation, offline fallback. */
-const CACHE_NAME='english-quest-v12-shell';
-const SHELL=['./','./index.html','./studio.js','./studio.css','./manifest.webmanifest','./icon-192.png'];
+/* English Quest v13: network-first navigation, offline fallback. */
+const CACHE_NAME='english-quest-v13-shell';
+const SHELL=['./','./index.html','./studio.js?v=13','./studio.css?v=13','./manifest.webmanifest','./icon-192.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));
 });
@@ -17,6 +17,15 @@ self.addEventListener('fetch',event=>{
       if(resp.ok){const copy=resp.clone();caches.open(CACHE_NAME).then(cache=>cache.put('./index.html',copy)).catch(()=>{});}
       return resp;
     }).catch(async()=> (await caches.match('./index.html')) || Response.error()));
+    return;
+  }
+  // Always check for fresh Speaking/Writing scripts, so old iPhone PWA caches
+  // cannot keep the broken audio controls indefinitely.
+  if(url.pathname.endsWith('/studio.js')||url.pathname.endsWith('/studio.css')){
+    event.respondWith(fetch(req).then(resp=>{
+      if(resp.ok){const copy=resp.clone();caches.open(CACHE_NAME).then(c=>c.put(req,copy)).catch(()=>{});}
+      return resp;
+    }).catch(async()=>await caches.match(req)||Response.error()));
     return;
   }
   event.respondWith(caches.match(req).then(found=>found||fetch(req).then(resp=>{
