@@ -16,7 +16,7 @@ iPhoneではTailscale Serveを通じて接続します。PCが停止中でもEng
    cd local_ai
    powershell -ExecutionPolicy Bypass -File .\run_windows.ps1
    \`\`\`
-2. 初回はPythonの依存関係とOllamaの \`qwen3:4b\`（約2.5GB）がダウンロードされます。
+2. 初回はPythonの依存関係とOllamaの \`qwen3:4b-instruct\`（約2.5GB）がダウンロードされます。
 3. コンソールに表示された **アクセス用トークン** は個人情報として扱い、GitHubにアップロードしないでください。
 4. 別のPowerShellで \`tailscale serve 8765\` を実行します。Tailscaleの案内に従ってHTTPSを有効にします。
 5. 表示された \`https://<PC名>.<tailnet名>.ts.net\` のURLを、English Questの Speaking / Writing → 設定 → PC接続先URLへ入力し、手順3のトークンを入力して「接続設定を保存・確認」を押してください。
