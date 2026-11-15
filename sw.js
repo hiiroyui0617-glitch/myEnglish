@@ -1,6 +1,6 @@
-/* English Quest v11: network-first navigation, offline fallback. */
-const CACHE_NAME='english-quest-v11-shell';
-const SHELL=['./','./index.html','./manifest.webmanifest','./icon-192.png'];
+/* English Quest v12: network-first navigation, offline fallback. */
+const CACHE_NAME='english-quest-v12-shell';
+const SHELL=['./','./index.html','./studio.js','./studio.css','./manifest.webmanifest','./icon-192.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));
 });
