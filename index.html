@@ -123,40 +123,121 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){
 function toast(t){const node=$('toast');node.textContent=t;node.classList.remove('hidden');clearTimeout(toast._t);toast._t=setTimeout(()=>node.classList.add('hidden'),3600)}
 function active(){return state.sessions[state.mode]}
 function getDiff(){if(state.difficulty!=='auto')return Number(state.difficulty);const a=Object.entries(state.history).filter(([k,v])=>questionMap.has(k)&&questionMap.get(k).mode===state.mode).flatMap(([k,v])=>(v.log||[]).map(z=>({t:z.t,ok:z.ok}))).sort((a,b)=>b.t-a.t).slice(0,24);if(a.length<12)return state.mode==='reading'?2:1;const rate=a.filter(x=>x.ok).length/a.length;return rate>=.82?3:rate>=.55?2:1}
-function partQuotas(){const p=state.part[state.mode];if(p!=='all')return {[p]:15};if(state.mode==='reading')return {'Part 5':9,'Part 6':3,'Part 7':3};if(state.mode==='listening')return {'Part 1':3,'Part 2':6,'Part 3':3,'Part 4':3};const lv=getDiff();return lv===1?{'Silver':9,'Gold':3,'Idioms':3}:lv===3?{'Silver':3,'Gold':9,'Idioms':3}:{'Silver':7,'Gold':5,'Idioms':3}}
-// v8: sessions are drawn in complete three-question source groups.
-function draw(){
-  const selected=[],diff=getDiff(),quotas=partQuotas();
-  for(const [part,count] of Object.entries(quotas)){
-    const groupMap=new Map();
-    for(const q of BANK){if(q.mode!==state.mode||q.part!==part)continue;
-      const gid=mockGroupId(q);
-      if(!groupMap.has(gid))groupMap.set(gid,{id:gid,questions:[],rand:Math.random()});
-      groupMap.get(gid).questions.push(q);
-    }
-    const candidates=[...groupMap.values()].map(g=>{
-      g.questions.sort((a,b)=>a.id.localeCompare(b.id));
-      g.seen=g.questions.reduce((n,q)=>n+(state.history[q.id]?.attempts||0),0);
-      g.seenItems=g.questions.filter(q=>(state.history[q.id]?.attempts||0)>0).length;
-      g.last=Math.max(...g.questions.map(q=>state.history[q.id]?.last||0));
-      g.distance=Math.min(...g.questions.map(q=>Math.abs(q.difficulty-diff)));
-      g.template=sourceTemplateKey(g.questions[0]);
-      return g;
-    });
-    candidates.sort((a,b)=>a.seenItems-b.seenItems||a.seen-b.seen||a.distance-b.distance||a.last-b.last||a.rand-b.rand);
-    let assigned=0;const usedTemplates=new Set();
-    for(const g of candidates){
-      if(assigned>=count)break;
-      if(assigned+g.questions.length>count)continue;
-      if(count%3===0&&['Part 3','Part 4','Part 6','Part 7'].includes(part)&&g.questions.length!==3)continue;
-      if(usedTemplates.has(g.template))continue;
-      for(const q of g.questions){selected.push(q.id);assigned++}
-      usedTemplates.add(g.template);
-    }
-    if(assigned!==count)throw new Error('通常練習の出題候補が不足しています: '+part);
+function partQuotas(){const p=state.part[state.mode];if(p!=='all')return {[p]:p==='Part 1'?new Set(BANK.filter(q=>q.part==='Part 1').map(q=>q.imageId)).size:15};if(state.mode==='reading')return {'Part 5':9,'Part 6':3,'Part 7':3};if(state.mode==='listening')return {'Part 1':3,'Part 2':6,'Part 3':3,'Part 4':3};const lv=getDiff();return lv===1?{'Silver':9,'Gold':3,'Idioms':3}:lv===3?{'Silver':3,'Gold':9,'Idioms':3}:{'Silver':7,'Gold':5,'Idioms':3}}
+
+/* v11: weighted randomness, template-level uniqueness and source cooldown. */
+function mockGroupId(q){return q.group||q.id}
+function selectionText(s){return String(s??'').toLowerCase().replace(/\s+/g,' ').trim()}
+function sourceTemplateKey(q){
+ if(q.mode==='vocab')return 'vocab:'+selectionText(q.term||q.id);
+ if(q.part==='Part 1')return 'Part 1:photo:'+String(q.imageId||q.id);
+ const g=String(mockGroupId(q));let m=g.match(/^R5X-(\d+)$/);
+ if(m)return 'Part 5:grammar-'+Math.floor((Number(m[1])-1)/12);
+ m=g.match(/^L2X-(\d+)$/);
+ if(m)return 'Part 2:response-'+((Number(m[1])-1)%40);
+ m=g.match(/^(?:GL[34]X|G[67]X)-(\d{2})-\d{2}$/);
+ if(m)return q.part+':scenario-'+m[1];
+ if(q.part==='Part 2')return q.part+':'+selectionText(q.prompt||q.id);
+ if(q.part==='Part 5')return q.part+':'+selectionText(q.question||q.id);
+ return q.part+':'+g;
+}
+function sourceContentKey(q){
+ if(q.part==='Part 1')return 'photo:'+String(q.imageId||q.id);
+ if(q.mode==='vocab')return 'vocab:'+selectionText(q.term||q.id);
+ if(q.part==='Part 2')return 'prompt:'+selectionText(q.prompt||'');
+ if(q.part==='Part 5')return 'stem:'+selectionText(q.question||'');
+ if(q.passage)return 'passage:'+selectionText(q.passage);
+ if(q.audio)return 'audio:'+selectionText(JSON.stringify(q.audio));
+ return 'group:'+String(mockGroupId(q));
+}
+function questionIdentityKey(q){
+ if(q.mode==='vocab')return 'vocab:'+selectionText(q.term||q.id);
+ if(q.part==='Part 2')return 'Part 2:'+selectionText(q.prompt||q.id);
+ if(q.part==='Part 1')return 'Part 1:'+q.imageId+':'+q.options.map(selectionText).sort().join('|');
+ return q.part+':'+selectionText(q.question||q.id)+':'+(q.options||[]).map(selectionText).sort().join('|');
+}
+function selectionRandom(){
+ if(typeof crypto!=='undefined'&&typeof crypto.getRandomValues==='function'){
+  const x=new Uint32Array(1);crypto.getRandomValues(x);return x[0]/4294967296;
+ }
+ return Math.random();
+}
+function selectionWeighted(items,weight){
+ if(!items.length)return null;
+ const weights=items.map(item=>Math.max(0,weight(item)));let sum=weights.reduce((a,b)=>a+b,0);
+ if(sum<=0)return items[Math.floor(selectionRandom()*items.length)];
+ let r=selectionRandom()*sum;
+ for(let i=0;i<items.length;i++){r-=weights[i];if(r<0)return items[i]}
+ return items[items.length-1];
+}
+function templateDrawWeight(key){
+ const old=(state.drawSources||{})[key];
+ if(!old)return 1.25;
+ const age=(state.drawSerial||0)-old.last;
+ const cooldown=age<=0?.06:age===1?.18:age===2?.48:1;
+ return cooldown/(1+Math.log2(old.count+1)*.35);
+}
+function groupDrawWeight(g,diff){
+ const old=(state.drawGroups||{})[g.id];
+ const age=old?(state.drawSerial||0)-old.last:99999;
+ const cooldown=old?(age<=0?.025:age===1?.12:age===2?.45:1):1;
+ const attempts=g.questions.reduce((n,q)=>n+(state.history[q.id]?.attempts||0),0);
+ const difficulty=1/(1+Math.abs((g.questions[0].difficulty||2)-diff)*.16);
+ return cooldown*difficulty/((1+(old?.count||0)*.45)*(1+Math.sqrt(attempts)*.10));
+}
+function selectSourceGroups(part,count,diff,selected){
+ const raw=new Map(),templates=new Map();
+ for(const q of BANK){if(q.part!==part)continue;const group=String(mockGroupId(q));
+  if(!raw.has(group))raw.set(group,[]);
+  raw.get(group).push(q);
+ }
+ for(const [id,questions] of raw){
+  questions.sort((a,b)=>a.id.localeCompare(b.id));
+  if(questions.length>count)continue;
+  if(['Part 3','Part 4','Part 6','Part 7'].includes(part)&&questions.length!==3)continue;
+  const signatures=questions.map(questionIdentityKey);
+  if(new Set(questions.map(q=>q.id)).size!==questions.length||new Set(signatures).size!==signatures.length)continue;
+  const group={id,questions,signatures,template:sourceTemplateKey(questions[0]),content:sourceContentKey(questions[0])};
+  if(!templates.has(group.template))templates.set(group.template,[]);
+  templates.get(group.template).push(group);
+ }
+ const chosen=[];let remaining=count;
+ while(remaining){
+  const candidates=[];
+  for(const [template,groups] of templates){
+   if(selected.templates.has(template))continue;
+   const valid=groups.filter(g=>g.questions.length<=remaining&&!selected.contents.has(g.content)&&
+    g.questions.every((q,i)=>!selected.ids.has(q.id)&&!selected.questions.has(g.signatures[i])));
+   if(valid.length)candidates.push({template,valid});
   }
-  if(new Set(selected).size!==selected.length)throw new Error('通常練習の重複を検出しました');
-  return selected;
+  if(!candidates.length)throw new Error('重複しない出題候補が不足しています: '+part+'（残り'+remaining+'問）');
+  const selectedTemplate=selectionWeighted(candidates,x=>templateDrawWeight(x.template));
+  const group=selectionWeighted(selectedTemplate.valid,g=>groupDrawWeight(g,diff));
+  chosen.push(group);selected.templates.add(group.template);selected.contents.add(group.content);
+  group.questions.forEach((q,i)=>{selected.ids.add(q.id);selected.questions.add(group.signatures[i])});
+  remaining-=group.questions.length;
+ }
+ return chosen;
+}
+function registerDrawnSources(ids){
+ const serial=(state.drawSerial||0)+1;state.drawSerial=serial;
+ state.drawSources=state.drawSources||{};state.drawGroups=state.drawGroups||{};
+ const sources=new Set(),groups=new Set();
+ for(const id of ids){const q=questionMap.get(id);if(!q)continue;
+  sources.add(sourceTemplateKey(q));groups.add(String(mockGroupId(q)));
+ }
+ for(const key of sources){const old=state.drawSources[key]||{count:0,last:0};state.drawSources[key]={count:old.count+1,last:serial};}
+ for(const key of groups){const old=state.drawGroups[key]||{count:0,last:0};state.drawGroups[key]={count:old.count+1,last:serial};}
+}
+
+function draw(){
+ const selected={templates:new Set(),contents:new Set(),questions:new Set(),ids:new Set()},ids=[];
+ for(const [part,count] of Object.entries(partQuotas())){
+  const groups=selectSourceGroups(part,count,getDiff(),selected);
+  for(const group of groups)for(const q of group.questions)ids.push(q.id);
+ }
+ if(new Set(ids).size!==ids.length)throw new Error('通常練習の重複を検出しました');
+ return ids;
 }
 function sessionPage(a){
   if(!a||a.finished)return [];
@@ -168,7 +249,7 @@ function sessionPage(a){
   }
   return items;
 }
-function makeSession(ids,review=false){stopAudio();clearTimeout(autoTimer);if(!ids.length){toast('復習対象はまだありません。新しい問題に挑戦しましょう。');return}state.sessions[state.mode]={ids,index:0,choice:null,correct:0,xp:0,streak:0,best:0,missed:[],review,started:timestamp(),finished:false,voiceUsed:false};questionStarted=Date.now();persist();render();}
+function makeSession(ids,review=false){stopAudio();clearTimeout(autoTimer);if(!ids.length){toast('復習対象はまだありません。新しい問題に挑戦しましょう。');return}if(!review)registerDrawnSources(ids);state.sessions[state.mode]={ids,index:0,choice:null,correct:0,xp:0,streak:0,best:0,missed:[],review,started:timestamp(),finished:false,voiceUsed:false};questionStarted=Date.now();persist();render();}
 function start(){try{makeSession(draw(),false)}catch(e){toast('出題できません: '+e.message)}}
 function startReview(){const ids=Object.keys(state.history).filter(k=>{const h=state.history[k],q=questionMap.get(k);return q&&q.mode===state.mode&&h.weak}).sort((a,b)=>state.history[a].last-state.history[b].last).slice(0,15);makeSession(ids,true)}
 // Unofficial indicator. This is deliberately not presented as a TOEIC score conversion.
@@ -291,7 +372,7 @@ const modeHist=Object.entries(state.history).filter(([k])=>questionMap.get(k)?.m
  $('bankSummary').textContent='問題バンク：'+inMode.length.toLocaleString()+'問（'+relevantParts.map(part=>part+' '+inMode.filter(q=>q.part===part).length+'問・未出題'+inMode.filter(q=>q.part===part&&!(state.history[q.id]?.attempts)).length+'問').join(' / ')+'）';
  $('totalXp').textContent=state.xp.toLocaleString();$('levelText').textContent='LV.'+state.level[state.mode];const min=Math.floor(state.studySeconds/60),pct=Math.min(100,Math.round(state.studySeconds/21600*100));$('studyTime').textContent=`${min}分 / 360分`;$('percentTime').textContent=pct+'%';$('timeProgress').style.width=pct+'%';renderScore()}
 function render(){renderControls();if(state.mode==='mock'){renderMock();return}const a=active();if(!a){renderHome();return}if(a.finished){renderResult(a);return}const page=sessionPage(a);if(page.length>1){renderGroupQuestion(a,page);return}renderQuestion(a)}
-function renderHome(){const reading=state.mode==='reading',partCount=BANK.filter(q=>q.mode===state.mode).length;const info=reading?'空欄補充・文書読解・複数情報の照合':state.mode==='listening'?'間隔を調整できる英語音声・会話理解・アナウンス読解':'試験対策向けの単語・慣用句を4択で学習。基礎・標準・応用のオリジナル問題';$('game').innerHTML=`<div class="welcome center"><div class="welcome-art">${reading?'📖':state.mode==='listening'?'🎧':'📚'}</div><div class="kicker">${reading?'READING TRAINING':state.mode==='listening'?'LISTENING TRAINING':'VOCABULARY TRAINING'}</div><h3>Ready for the next quest?</h3><p>${info}をゲーム形式で練習。<strong>${partCount.toLocaleString()}問</strong>の問題バンクから未出題を優先して選びます。15問ごとに次のセットへ進めます。</p><div class="feature-grid"><div class="feature"><b>15 QUESTIONS</b><span>1ステージ</span></div><div class="feature"><b>INSTANT FEEDBACK</b><span>即時採点と解説</span></div><div class="feature"><b>NO WAITING</b><span>未出題から優先</span></div></div><button type="button" class="btn btn-primary" id="homeStart">▶ トレーニングを始める</button>${state.mode==='listening'?'<p class="rest-note">🔊 英語音声を選択・試聴できます。番号・本文・質問の間隔も調整可能です。</p>':state.mode==='vocab'?'<p class="rest-note">例文・設問・解説はオリジナルで制作しています。</p>':''}</div>`;$('homeStart').onclick=start}
+function renderHome(){const reading=state.mode==='reading',partCount=BANK.filter(q=>q.mode===state.mode).length;const info=reading?'空欄補充・文書読解・複数情報の照合':state.mode==='listening'?'間隔を調整できる英語音声・会話理解・アナウンス読解':'試験対策向けの単語・慣用句を4択で学習。基礎・標準・応用のオリジナル問題';$('game').innerHTML=`<div class="welcome center"><div class="welcome-art">${reading?'📖':state.mode==='listening'?'🎧':'📚'}</div><div class="kicker">${reading?'READING TRAINING':state.mode==='listening'?'LISTENING TRAINING':'VOCABULARY TRAINING'}</div><h3>Ready for the next quest?</h3><p>${info}をゲーム形式で練習。<strong>${partCount.toLocaleString()}問</strong>の問題バンクから未出題を優先して選びます。通常は15問、Part 1だけを選んだ場合は写真の重複を避けて5問を出題します。</p><div class="feature-grid"><div class="feature"><b>15 QUESTIONS</b><span>1ステージ</span></div><div class="feature"><b>INSTANT FEEDBACK</b><span>即時採点と解説</span></div><div class="feature"><b>NO WAITING</b><span>未出題から優先</span></div></div><button type="button" class="btn btn-primary" id="homeStart">▶ トレーニングを始める</button>${state.mode==='listening'?'<p class="rest-note">🔊 英語音声を選択・試聴できます。番号・本文・質問の間隔も調整可能です。</p>':state.mode==='vocab'?'<p class="rest-note">例文・設問・解説はオリジナルで制作しています。</p>':''}</div>`;$('homeStart').onclick=start}
 function readingPassage(q){return q.passage?`<div class="passage" aria-label="問題文">${escape(q.passage)}</div>`:''}
 function audioTranscript(q){if(q.part==='Part 1')return q.options.map((r,i)=>'('+String.fromCharCode(65+i)+') '+r).join('\n');if(q.part==='Part 2')return `${q.prompt}\n\n${q.responses.map((r,i)=>'('+String.fromCharCode(65+i)+') '+r).join('\n')}`;return q.audio.map(x=>`${x.who}: ${x.text}`).join('\n')}
 function photoView(q){const src=window.TOEIC_QUEST_PART1_IMAGES?.[q.imageId];return src?`<div class="part1-photo"><img src="${src}" alt="写真描写問題の画像" draggable="false"></div>`:''}
@@ -402,53 +483,18 @@ if('speechSynthesis' in window){const synth=window.speechSynthesis;
 }
 
 
-// v8: a single exam is drawn by distinct source groups AND scenario templates.
-// One original source (conversation, announcement, email, photo) becomes one page.
+/* v11: all fifty mini-test questions are drawn from unique templates. */
 const MOCK_PARTS=[['Part 1',3],['Part 2',4],['Part 3',9],['Part 4',9],['Part 5',10],['Part 6',3],['Part 7',12]];
 const MOCK_L_COUNT=25, MOCK_TOTAL=50;
 const MOCK_L_SECONDS=15*60,MOCK_R_SECONDS=20*60;
-function mockGroupId(q){return q.group||q.id}
-function sourceTemplateKey(q){
-  if(q.part==='Part 1')return q.part+':'+(q.imageId||q.id);
-  // The X question banks contain variants of eight/seven source templates.
-  // G7X-03-11 and G7X-03-05 must not appear in the same test.
-  const id=String(q.group||q.id);
-  const match=id.match(/^(?:GL[34]X|G[67]X)-(\d{2})-\d{2}$/);
-  if(match)return q.part+':scenario-'+match[1];
-  if(q.part==='Part 2')return q.part+':'+String(q.prompt||q.id).trim().toLowerCase();
-  if(q.part==='Part 5')return q.part+':'+String(q.question||q.id).trim().toLowerCase();
-  return q.part+':'+id;
-}
 function mockDraw(){
-  const ids=[],selectedIds=new Set(),selectedSources=new Set();
-  for(const [part,count] of MOCK_PARTS){
-    const byGroup=new Map();
-    for(const q of BANK){if(q.part!==part)continue;const key=mockGroupId(q);
-      if(!byGroup.has(key))byGroup.set(key,[]);
-      byGroup.get(key).push(q);
-    }
-    const groups=[...byGroup.values()].map(questions=>{
-      questions.sort((a,b)=>a.id.localeCompare(b.id));
-      return {questions,template:sourceTemplateKey(questions[0]),
-        seen:questions.reduce((a,q)=>a+(state.history[q.id]?.attempts||0),0),
-        recent:Math.max(0,...questions.map(q=>state.history[q.id]?.last||0)),
-        rand:Math.random(),diff:Math.abs(questions[0].difficulty-2)};
-    });
-    groups.sort((a,b)=>a.seen-b.seen||a.recent-b.recent||a.diff-b.diff||a.rand-b.rand);
-    let added=0;
-    for(const g of groups){
-      if(added>=count)break;
-      if(added+g.questions.length>count)continue; // Never split a common source
-      if(count%3===0&&['Part 3','Part 4','Part 6','Part 7'].includes(part)&&g.questions.length!==3)continue;
-      if(selectedSources.has(g.template))continue; // Never repeat a templated scenario
-      if(g.questions.some(q=>selectedIds.has(q.id)))continue;
-      g.questions.forEach(q=>{ids.push(q.id);selectedIds.add(q.id)});
-      selectedSources.add(g.template);added+=g.questions.length;
-    }
-    if(added!==count)throw new Error('小テストの出題候補が不足しています: '+part);
-  }
-  if(ids.length!==MOCK_TOTAL||new Set(ids).size!==MOCK_TOTAL)throw new Error('小テストの重複を検出しました。');
-  return ids;
+ const selected={templates:new Set(),contents:new Set(),questions:new Set(),ids:new Set()},ids=[];
+ for(const [part,count] of MOCK_PARTS){
+  const groups=selectSourceGroups(part,count,2,selected);
+  for(const group of groups)for(const q of group.questions)ids.push(q.id);
+ }
+ if(ids.length!==MOCK_TOTAL||new Set(ids).size!==MOCK_TOTAL)throw new Error('小テストの重複を検出しました。');
+ return ids;
 }
 function mockPage(m){
   const idx=m.index,first=questionMap.get(m.ids[idx]);
@@ -466,6 +512,7 @@ function startMock(){
   stopAudio();clearTimeout(autoTimer);
   let ids;try{ids=mockDraw()}catch(e){toast('出題できません: '+e.message);return}
   const now=Date.now();
+  registerDrawnSources(ids);
   state.mock={ids,answers:Array(ids.length).fill(null),index:0,phase:'listening',phaseStartedAt:now,startedAt:now,heard:[],finished:false,aborted:false,preScore:scoreEstimate().total};
   state.mode='mock';persist();render();
 }
