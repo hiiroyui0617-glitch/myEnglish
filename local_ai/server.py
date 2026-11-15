@@ -15,7 +15,7 @@ from fastapi import FastAPI, File, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-MODEL = os.getenv("ENGLISH_QUEST_MODEL", "qwen3:4b")
+MODEL = os.getenv("ENGLISH_QUEST_MODEL", "qwen3:4b-instruct")
 TOKEN = os.getenv("ENGLISH_QUEST_TOKEN", "")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
 MAX_AUDIO_BYTES = 12 * 1024 * 1024
