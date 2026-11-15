@@ -1,0 +1,5 @@
+local_ai/.venv/
+local_ai/token.txt
+local_ai/__pycache__/
+local_ai/*.pyc
+.env
