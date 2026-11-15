@@ -1,0 +1,7 @@
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+python-multipart>=0.0.9,<1
+pydantic>=2,<3
+faster-whisper>=1.1,<2
+av>=12,<18
+numpy>=1.24,<3
