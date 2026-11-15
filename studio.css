@@ -43,3 +43,7 @@ body.studio-mode .tabbar .tab{white-space:normal;min-height:39px}
  .studio-actions button{width:100%;flex:1 1 100%}
  .studio-top #studioNew{padding:7px 11px;font-size:12px}
 }
+
+/* iPhone: clearly show permission, playback and failure messages beside conversation. */
+.studio-top-status{border-left:3px solid var(--teal);background:#0c2935;font-size:13px;line-height:1.75}
+.studio-say:focus-visible,#studioRecord:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
