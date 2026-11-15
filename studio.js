@@ -30,7 +30,8 @@ const TOPICS=[
 const defaultData=()=>({version:1,topicsSeen:[],sessions:{speaking:null,writing:null},archives:{speaking:[],writing:[]},settings:{engine:'auto',serverUrl:'',autoSpeak:true},totalTurns:{speaking:0,writing:0}});
 function load(){try{const data=JSON.parse(localStorage.getItem(KEY));if(!data||data.version!==1)return defaultData();const d=defaultData();return {...d,...data,sessions:{...d.sessions,...data.sessions},archives:{...d.archives,...data.archives},settings:{...d.settings,...data.settings}};}catch(e){return defaultData();}}
 let data=load(),token='';try{token=sessionStorage.getItem('eq-pc-token')||'';}catch(e){}
-let api=null,activeMode=null,working=false,engine=null,recorder=null,recStream=null,recChunks=[],audioBlob=null,audioUrl='',deviceStatus='',lastStatus='', lastEngine='guided';
+let api=null,activeMode=null,working=false,engine=null,recorder=null,recStream=null,recChunks=[],audioBlob=null,audioUrl='',deviceStatus='',lastStatus='',lastEngine='guided';
+let activeUtterance=null,activeSpeechButton=null,speechTimer=null,permissionPending=false;
 const el=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){lastStatus='保存容量の上限に達した可能性があります。履歴をエクスポートしてください。';}}
@@ -50,14 +51,64 @@ function begin(mode){
  if(mode==='speaking'&&data.settings.autoSpeak)say(topic.opening);
 }
 function ensure(mode){if(!data.sessions[mode])begin(mode);return data.sessions[mode]}
-function stopSpeech(){try{speechSynthesis.cancel()}catch(e){}}
-function say(text){
- if(!('speechSynthesis'in window))return status('このブラウザでは音声読み上げが使えません。');
- stopSpeech();const utter=new SpeechSynthesisUtterance(String(text).slice(0,800));utter.lang='en-US';utter.rate=.92;
- const voices=speechSynthesis.getVoices();const choice=voices.find(v=>v.lang.toLowerCase().startsWith('en')&&/enhanced|premium|samantha/i.test(v.name))||voices.find(v=>v.lang.toLowerCase().startsWith('en'));
- if(choice)utter.voice=choice;try{speechSynthesis.speak(utter)}catch(e){status('音声の再生に失敗しました。')}
+function status(message){
+ lastStatus=String(message);
+ ['studioTopStatus','studioStatus'].forEach(id=>{const e=el(id);if(e)e.textContent=lastStatus});
 }
-function status(message){lastStatus=message;const node=el('studioStatus');if(node)node.textContent=message;}
+function stopSpeech(){
+ if(speechTimer){clearTimeout(speechTimer);speechTimer=null}
+ if(activeSpeechButton){activeSpeechButton.textContent='🔊 音声で聞く';activeSpeechButton=null}
+ if(activeUtterance){activeUtterance.onstart=null;activeUtterance.onend=null;activeUtterance.onerror=null;activeUtterance=null}
+ try{window.speechSynthesis?.cancel()}catch(e){}
+}
+function say(text,button){
+ if(permissionPending||recorder?.state==='recording'){
+  status('録音中は音声を流せません。先に「録音を終了」を押してください。');return;
+ }
+ const synth=window.speechSynthesis,Utterance=window.SpeechSynthesisUtterance;
+ if(!synth||!Utterance){status('音声合成が利用できません。iPhoneではSafariで開いてください。');return;}
+ stopSpeech();
+ try{
+  let started=false;
+  const utter=new Utterance(String(text||'').slice(0,800));
+  utter.lang='en-US';utter.rate=.9;utter.volume=1;
+  let voices=[];try{voices=synth.getVoices()||[]}catch(e){}
+  const en=voices.filter(v=>String(v.lang||'').toLowerCase().startsWith('en'));
+  utter.voice=en.find(v=>/samantha|enhanced|premium/i.test(v.name))||en[0]||null;
+  activeUtterance=utter;activeSpeechButton=button||null;
+  if(button)button.textContent='🔊 再生準備中…';
+  status('音声の再生を開始しています…');
+  utter.onstart=()=>{
+   if(activeUtterance!==utter)return;started=true;
+   if(speechTimer){clearTimeout(speechTimer);speechTimer=null}
+   if(activeSpeechButton)activeSpeechButton.textContent='■ 再生中';
+   status('英語音声を再生中です。');
+  };
+  utter.onend=()=>{
+   if(activeUtterance!==utter)return;
+   if(speechTimer){clearTimeout(speechTimer);speechTimer=null}
+   activeUtterance=null;
+   if(activeSpeechButton){activeSpeechButton.textContent='🔊 もう一度聞く';activeSpeechButton=null;}
+   status(started?'音声再生が終了しました。':'再生開始を確認できませんでした。もう一度ボタンを押してください。');
+  };
+  utter.onerror=e=>{
+   if(activeUtterance!==utter)return;
+   if(speechTimer){clearTimeout(speechTimer);speechTimer=null}
+   activeUtterance=null;
+   if(activeSpeechButton){activeSpeechButton.textContent='🔊 再試行';activeSpeechButton=null;}
+   status('音声の再生エラー：'+String(e?.error||'unknown')+'。Safariと音量設定を確認してください。');
+  };
+  try{synth.resume?.()}catch(e){}
+  // Keep the user gesture: speak() runs synchronously inside the button callback.
+  synth.speak(utter);
+  speechTimer=setTimeout(()=>{
+   if(activeUtterance===utter&&!started){
+    if(activeSpeechButton)activeSpeechButton.textContent='🔊 再試行';
+    status('音声の開始を確認できません。iPhoneの音量を上げ、もう一度押してください。');
+   }
+  },3500);
+ }catch(e){stopSpeech();status('音声を開始できません：'+String(e?.message||e));}
+}
 function feedback(text,mode){
  const a=[];const x=text.trim();if(/\bi\b/.test(x))a.push('代名詞 I は常に大文字にしましょう。');
  if(x.length>15&&!/[.!?]$/.test(x))a.push('文末にピリオドや疑問符を付けると読みやすくなります。');
@@ -141,40 +192,67 @@ async function send(){
 }
 function clearAudio(){if(audioUrl){URL.revokeObjectURL(audioUrl);audioUrl='';}audioBlob=null;}
 async function record(){
- if(working)return;
- if(recorder&&recorder.state==='recording'){recorder.stop();return;}
- if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){status('このブラウザでは録音できません。入力欄を利用してください。');return;}
+ if(working){status('処理中です。終了後に録音してください。');return;}
+ if(permissionPending){status('マイクの許可を待っています。iPhoneの確認画面をご覧ください。');return;}
+ const button=el('studioRecord');
+ if(recorder?.state==='recording'){
+  if(button)button.textContent='録音を保存中…';
+  status('録音を終了して保存しています…');
+  try{recorder.stop()}catch(e){status('録音終了に失敗：'+e.message)}
+  return;
+ }
+ if(window.isSecureContext===false){status('マイクにはHTTPS接続が必要です。SafariでGitHub Pagesを開いてください。');return;}
+ if(!navigator.mediaDevices?.getUserMedia){status('マイクAPIが利用できません。Safariのマイク権限を確認してください。');return;}
+ const Recorder=window.MediaRecorder;
+ if(typeof Recorder!=='function'){status('このブラウザでは録音が利用できません。iOSの更新またはSafariでの起動をお試しください。');return;}
+ stopSpeech();permissionPending=true;
+ if(button)button.textContent='マイクの許可を確認中…';
+ status('iPhoneにマイクの許可画面が表示されたら「許可」を選択してください。');
  try{
-   recStream=await navigator.mediaDevices.getUserMedia({audio:true});recChunks=[];
-   const prefer=['audio/mp4','audio/webm;codecs=opus','audio/webm'];
-   const mime=prefer.find(type=>MediaRecorder.isTypeSupported?.(type));
-   recorder=new MediaRecorder(recStream,mime?{mimeType:mime}:undefined);
-   recorder.ondataavailable=e=>{if(e.data.size)recChunks.push(e.data)};
-   recorder.onerror=()=>status('録音に失敗しました。');
-   recorder.onstop=async()=>{
-    recStream?.getTracks().forEach(t=>t.stop());recStream=null;
-    const blob=new Blob(recChunks,{type:recorder.mimeType||'audio/mp4'});recorder=null;
-    clearAudio();audioBlob=blob;audioUrl=URL.createObjectURL(blob);
-    if(!blob.size){status('録音が空でした。');refresh();return;}
-    const wantsPc=data.settings.engine==='pc'||(data.settings.engine==='auto'&&data.settings.serverUrl&&token);
-    if(wantsPc){
-     status('PCで音声認識中…');working=true;
-     try{
-      const fd=new FormData();fd.append('audio',blob,'recording.'+(blob.type.includes('mp4')?'m4a':'webm'));
-      const result=await requestPC('/transcribe',{method:'POST',body:fd});
-      const transcription=String(result.text||'').trim();
-      refresh();
-      const field=el('studioInput');if(field&&transcription)field.value=transcription;
-      status(transcription?'音声認識完了。必要に応じて修正し、送信してください。':'音声を認識できませんでした。録音を聞き直してください。');
-     }catch(e){refresh();status('音声認識に失敗：'+e.message+'。録音の再生はできます。');}
-     finally{working=false;}
-    }else status('録音しました。再生して発音を確認し、発言内容を英文入力してください（iPhone単独では自動文字起こしなし）。');
-    if(!wantsPc)refresh();
-   };
-   recorder.start();status('録音中です。もう一度押すと終了します。');refresh();
- }catch(e){recStream?.getTracks().forEach(t=>t.stop());recStream=null;status('マイクを使用できません：'+e.message);}
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  if(activeMode!=='speaking'){stream.getTracks().forEach(t=>t.stop());permissionPending=false;return;}
+  recStream=stream;recChunks=[];
+  let mime;try{mime=['audio/mp4','audio/webm;codecs=opus','audio/webm'].find(t=>Recorder.isTypeSupported?.(t))}catch(e){}
+  try{recorder=new Recorder(stream,mime?{mimeType:mime}:undefined)}
+  catch(e){recorder=new Recorder(stream)}
+  const current=recorder;
+  current.ondataavailable=e=>{if(e.data?.size>0)recChunks.push(e.data)};
+  current.onerror=e=>{status('録音エラー：'+String(e?.error?.message||e?.error?.name||'unknown'));try{current.stop()}catch(err){}};
+  current.onstop=async()=>{
+   recStream?.getTracks().forEach(t=>t.stop());recStream=null;
+   const blob=new Blob(recChunks,{type:current.mimeType||mime||'audio/mp4'});
+   recorder=null;permissionPending=false;clearAudio();
+   if(!blob.size){refresh();status('録音データが空でした。再度お試しください。');return;}
+   audioBlob=blob;audioUrl=URL.createObjectURL(blob);
+   const pc=data.settings.engine==='pc'||(data.settings.engine==='auto'&&data.settings.serverUrl&&token);
+   refresh();
+   status('録音を保存しました。再生バーで音声を確認できます。'+(pc?' 文字起こしを処理中…':' 英文を入力して送信してください。'));
+   if(pc){
+    working=true;
+    try{
+     const form=new FormData();
+     form.append('audio',blob,'recording.'+(blob.type.includes('mp4')?'m4a':'webm'));
+     const result=await requestPC('/transcribe',{method:'POST',body:form});
+     const input=el('studioInput');if(input)input.value=String(result.text||'').trim();
+     status(result.text?'文字起こしが完了しました。文章を確認して送信してください。':'音声を認識できませんでした。録音は再生できます。');
+    }catch(e){status('音声認識エラー：'+e.message+'。録音は再生できます。')}
+    finally{working=false}
+   }
+  };
+  current.start();permissionPending=false;
+  if(button){button.textContent='■ 録音を終了';button.setAttribute('aria-pressed','true');}
+  status('● 録音中です。話し終わったら「録音を終了」を押してください。');
+ }catch(e){
+  permissionPending=false;recStream?.getTracks().forEach(t=>t.stop());recStream=null;recorder=null;
+  if(button)button.textContent='🎙 録音する';
+  const message=e?.name==='NotAllowedError'?'マイクの使用が拒否されました。Safariのサイト設定でマイクを許可してください。':
+  e?.name==='NotReadableError'?'マイクが他のアプリで使用中の可能性があります。':
+  e?.name==='NotFoundError'?'使用できるマイクが見つかりません。':
+  'マイクを起動できません：'+String(e?.message||e);
+  status(message);
+ }
 }
-function cancelRecording(){if(recorder&&recorder.state==='recording'){recorder.onstop=null;recorder.stop()}recorder=null;recStream?.getTracks().forEach(t=>t.stop());recStream=null;}
+function cancelRecording(){permissionPending=false;if(recorder&&recorder.state==='recording'){recorder.onstop=null;try{recorder.stop()}catch(e){}}recorder=null;recStream?.getTracks().forEach(t=>t.stop());recStream=null;}
 function pause(){cancelRecording();stopSpeech();}
 async function loadDevice(){
  if(engine){status('端末内AIは読み込み済みです。');return;}
@@ -219,7 +297,8 @@ function render(ctx){
  const deviceMessage=isSpeaking?'<div class="studio-tip">🎙 PC接続時：録音→文字起こし→内容確認→送信。iPhone単独時：録音・再生・手入力による練習（自動音声認識はありません）。</div>':'<div class="studio-tip">英文を2〜4文で入力してください。AI利用時は内容に応じた返答、教材モードでは用意された追加質問を出します。</div>';
  el('game').innerHTML='<div class="studio-wrap"><div class="studio-top"><div><span class="studio-eyebrow">'+(isSpeaking?'SPEAKING QUEST':'WRITING QUEST')+'</span><h3>'+esc(topic.title)+'</h3><span class="studio-level">'+topic.level+' ／ '+(s.turns||0)+' ターン</span></div><button id="studioNew" class="btn btn-secondary" type="button">別の話題</button></div>'+
  '<div class="studio-method">現在の方式：'+(data.settings.engine==='guided'?'教材会話':data.settings.engine==='pc'?'PC連携':data.settings.engine==='device'?'端末内AI（要読み込み）':'自動選択')+
- ' <span class="studio-muted">・教材モードは自由なAI返答ではありません</span></div>'+
+ ' <span class="studio-muted">・教材モードは自由なAI返答ではありません</span></div>'+ 
+ '<div class="studio-status studio-top-status" id="studioTopStatus" role="status" aria-live="polite">'+esc(statusText)+'</div>'+
  '<div id="studioTranscript" class="studio-thread" aria-live="polite">'+messages+'</div>'+deviceMessage+
  (audioUrl?'<audio class="studio-playback" id="studioPlayback" src="'+esc(audioUrl)+'" controls preload="none"></audio>':'')+
  '<div class="studio-compose"><label for="studioInput">Your response (English)</label><textarea id="studioInput" rows="'+(isSpeaking?'2':'4')+'" maxlength="1500" placeholder="'+(isSpeaking?'話した英文を入力、またはPC連携で音声認識':'2〜4文の英文を入力')+'"></textarea>'+
@@ -240,7 +319,7 @@ function render(ctx){
  };
  el('studioExport').onclick=exportHistory;
  if(isSpeaking)el('studioRecord').onclick=record;
- document.querySelectorAll('[data-studio-say]').forEach(button=>button.onclick=()=>{const msg=s.messages[Number(button.dataset.studioSay)];if(msg)say(msg.text)});
+ document.querySelectorAll('[data-studio-say]').forEach(button=>button.onclick=()=>{const msg=s.messages[Number(button.dataset.studioSay)];if(msg)say(msg.text,button)});
  const thread=el('studioTranscript');if(thread)thread.scrollTop=thread.scrollHeight;
 }
 function refresh(){if(api&&activeMode===api.mode)render(api)}
