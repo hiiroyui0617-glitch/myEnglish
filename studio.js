@@ -161,12 +161,14 @@ async function record(){
      try{
       const fd=new FormData();fd.append('audio',blob,'recording.'+(blob.type.includes('mp4')?'m4a':'webm'));
       const result=await requestPC('/transcribe',{method:'POST',body:fd});
-      const field=el('studioInput');if(field)field.value=String(result.text||'').trim();
-      status(result.text?'音声認識完了。必要に応じて修正し、送信してください。':'音声を認識できませんでした。録音を聞き直してください。');
+      const transcription=String(result.text||'').trim();
+      refresh();
+      const field=el('studioInput');if(field&&transcription)field.value=transcription;
+      status(transcription?'音声認識完了。必要に応じて修正し、送信してください。':'音声を認識できませんでした。録音を聞き直してください。');
      }catch(e){status('音声認識に失敗：'+e.message+'。録音の再生はできます。');}
      finally{working=false;}
     }else status('録音しました。再生して発音を確認し、発言内容を英文入力してください（iPhone単独では自動文字起こしなし）。');
-    refresh();
+    if(!wantsPc)refresh();
    };
    recorder.start();status('録音中です。もう一度押すと終了します。');refresh();
  }catch(e){recStream?.getTracks().forEach(t=>t.stop());recStream=null;status('マイクを使用できません：'+e.message);}
