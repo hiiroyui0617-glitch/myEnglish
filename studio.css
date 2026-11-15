@@ -1,0 +1,45 @@
+/* English Quest v12 - isolated styles for Speaking / Writing.
+   Original training and mock selectors remain untouched. */
+body.studio-mode .controls{display:none!important}
+body.studio-mode #game{padding:clamp(15px,3vw,28px)}
+body.studio-mode .tabbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+body.studio-mode .tabbar .tab{white-space:normal;min-height:39px}
+.studio-wrap{display:flex;flex-direction:column;gap:16px;min-width:0}
+.studio-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.studio-top h3{font-size:clamp(20px,4vw,27px);margin:3px 0 4px;color:#fff}
+.studio-eyebrow{font-size:11px;letter-spacing:1.5px;color:var(--teal);font-weight:800}
+.studio-level,.studio-muted{color:var(--muted);font-size:12px}
+.studio-method{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface2);font-size:13px}
+.studio-thread{height:min(54vh,500px);min-height:260px;overflow:auto;display:flex;flex-direction:column;gap:11px;padding:12px;background:#0b1728;border:1px solid var(--line);border-radius:14px}
+.studio-msg{border-radius:13px;padding:12px 15px;max-width:91%;word-break:break-word}
+.studio-msg p{margin:5px 0 0;white-space:pre-wrap;font-size:15px;line-height:1.7}
+.studio-bot{align-self:flex-start;background:var(--surface2);border:1px solid #344d69}
+.studio-user{align-self:flex-end;background:#15453f;border:1px solid #26695a}
+.studio-role{font-weight:750;font-size:10px;letter-spacing:1px;color:var(--teal)}
+.studio-user .studio-role{color:#d4ffe7}
+.studio-say{background:transparent;border:1px solid #526b83;color:#d8eaf9;margin-top:9px;padding:4px 10px;border-radius:8px;font-size:12px}
+.studio-feedback{margin-top:10px;border-top:1px solid #35516d;padding-top:7px;font-size:12px}
+.studio-feedback summary{cursor:pointer;color:#dcefff}
+.studio-compose{display:flex;flex-direction:column;gap:7px}
+.studio-compose label,.studio-settings label{font-size:12px;font-weight:700;color:#dcefff}
+.studio-compose textarea{width:100%;max-width:100%;min-width:100%;border-radius:11px;padding:13px;color:var(--text);background:#0c1a2b;border:1px solid #49617d;font:inherit;font-size:16px;line-height:1.7}
+.studio-compose textarea:focus{outline:2px solid var(--teal);border-color:var(--teal)}
+.studio-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.studio-actions button{flex:1;min-width:125px}
+.studio-status{padding:9px 12px;background:#162e3a;border-radius:9px;color:#daecff;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.studio-settings{border:1px solid var(--line);background:#121f32;border-radius:13px;padding:13px}
+.studio-settings summary{font-weight:750;cursor:pointer;font-size:13px}
+.studio-settings[open]{display:flex;flex-direction:column;gap:11px}
+.studio-settings select,.studio-settings input:not([type=checkbox]){width:100%;border:1px solid #49617d;background:#0b192b;color:var(--text);font:inherit;font-size:15px;padding:10px;border-radius:9px}
+.studio-settings .studio-check{display:flex;align-items:center;gap:8px}
+.studio-settings input[type=checkbox]{accent-color:var(--teal)}
+.studio-tip{color:#bdcee3;font-size:12px;line-height:1.65;background:#112239;padding:10px;border-left:3px solid #447c9b;border-radius:4px}
+.studio-settings p{margin:0}
+.studio-playback{width:100%;height:42px}
+@media(max-width:600px){
+ .studio-thread{height:40vh;min-height:210px;padding:9px}
+ .studio-msg{max-width:96%;padding:11px}
+ .studio-msg p{font-size:14px}
+ .studio-actions button{width:100%;flex:1 1 100%}
+ .studio-top #studioNew{padding:7px 11px;font-size:12px}
+}
