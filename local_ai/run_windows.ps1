@@ -17,7 +17,7 @@ if (-not (Test-Path "token.txt")) {
   [Convert]::ToBase64String($bytes) | Set-Content -Encoding Ascii "token.txt"
 }
 $env:ENGLISH_QUEST_TOKEN = (Get-Content "token.txt" -Raw).Trim()
-$env:ENGLISH_QUEST_MODEL = "qwen3:4b"
+$env:ENGLISH_QUEST_MODEL = "qwen3:4b-instruct"
 Write-Host "Checking Ollama model. Download occurs only on first use."
 & ollama pull $env:ENGLISH_QUEST_MODEL
 if ($LASTEXITCODE -ne 0) { exit 1 }
