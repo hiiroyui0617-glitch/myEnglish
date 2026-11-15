@@ -27,8 +27,8 @@ const TOPICS=[
  {id:'restaurant',title:'At a restaurant',level:'A2',opening:'You are at a restaurant. What would you like to order?',follow:['Would you like something to drink?','Do you have any questions about the menu?','Would you like an appetizer?','How spicy would you like the dish?','Would you like to share a dessert?','Was everything satisfactory?','How would you ask for the bill politely?','Would you recommend this restaurant to a friend?']},
  {id:'office',title:'Office communication',level:'B1',opening:'You need to reschedule a team meeting. How would you explain the situation?',follow:['What time would be convenient for everyone?','How would you apologize for the change?','What information should the invitation include?','What would you do if someone could not attend?','How could the meeting be more efficient?','How would you summarize the main decisions?','What should the team do before the next meeting?','What did you learn about professional communication?']}
 ];
-const defaultData=()=>({version:1,topicsSeen:[],sessions:{speaking:null,writing:null},settings:{engine:'auto',serverUrl:'',autoSpeak:true},totalTurns:{speaking:0,writing:0}});
-function load(){try{const data=JSON.parse(localStorage.getItem(KEY));if(!data||data.version!==1)return defaultData();const d=defaultData();return {...d,...data,sessions:{...d.sessions,...data.sessions},settings:{...d.settings,...data.settings}};}catch(e){return defaultData();}}
+const defaultData=()=>({version:1,topicsSeen:[],sessions:{speaking:null,writing:null},archives:{speaking:[],writing:[]},settings:{engine:'auto',serverUrl:'',autoSpeak:true},totalTurns:{speaking:0,writing:0}});
+function load(){try{const data=JSON.parse(localStorage.getItem(KEY));if(!data||data.version!==1)return defaultData();const d=defaultData();return {...d,...data,sessions:{...d.sessions,...data.sessions},archives:{...d.archives,...data.archives},settings:{...d.settings,...data.settings}};}catch(e){return defaultData();}}
 let data=load(),token='';try{token=sessionStorage.getItem('eq-pc-token')||'';}catch(e){}
 let api=null,activeMode=null,working=false,engine=null,recorder=null,recStream=null,recChunks=[],audioBlob=null,audioUrl='',deviceStatus='',lastStatus='', lastEngine='guided';
 const el=id=>document.getElementById(id);
@@ -43,6 +43,7 @@ function pickTopic(){
  const topic=available[randomIndex(available.length)];data.topicsSeen.push(topic.id);return topic;
 }
 function begin(mode){
+ const previous=data.sessions[mode];if(previous?.turns){data.archives=data.archives||{speaking:[],writing:[]};data.archives[mode]=[...(data.archives[mode]||[]),previous].slice(-30);}
  const topic=pickTopic();
  data.sessions[mode]={topicId:topic.id,started:now(),turns:0,followupIndex:0,messages:[{role:'assistant',text:topic.opening,engine:'guided'}]};
  lastStatus='新しいトピックを開始しました。';save();refresh();
@@ -131,7 +132,7 @@ async function send(){
  if(field)field.value='';refresh();status('返答を作成しています…');
  try{
    const output=await answerFor(s,mode);
-   s.messages.push({role:'assistant',text:output.reply,engine:output.engine,feedback:output.feedback_ja||''});
+   s.messages.push({role:'assistant',text:output.reply,engine:output.engine,feedback:output.feedback_ja||(output.engine==='guided'?('簡易表記チェック：'+feedback(msg,mode)):'')});
    lastEngine=output.engine;
    if(mode===activeMode&&mode==='speaking'&&data.settings.autoSpeak)say(output.reply);
    if(!lastStatus.includes('失敗'))lastStatus=output.engine==='guided'?'教材モード：事前に用意された質問で練習中（自由なAI対話ではありません）。':output.engine==='pc'?'PCのローカルAIが返答しました。':'端末内AIが返答しました。';
@@ -165,7 +166,7 @@ async function record(){
       refresh();
       const field=el('studioInput');if(field&&transcription)field.value=transcription;
       status(transcription?'音声認識完了。必要に応じて修正し、送信してください。':'音声を認識できませんでした。録音を聞き直してください。');
-     }catch(e){status('音声認識に失敗：'+e.message+'。録音の再生はできます。');}
+     }catch(e){refresh();status('音声認識に失敗：'+e.message+'。録音の再生はできます。');}
      finally{working=false;}
     }else status('録音しました。再生して発音を確認し、発言内容を英文入力してください（iPhone単独では自動文字起こしなし）。');
     if(!wantsPc)refresh();
@@ -180,8 +181,8 @@ async function loadDevice(){
  if(!navigator.gpu){status('WebGPUが利用できません。iOS/Safariのバージョンや端末の対応状況を確認してください。');return;}
  if(working)return;working=true;status('端末内AIを準備中。初回は数百MB程度のダウンロードが必要な場合があります。');
  try{
-  const webllm=await import('https://esm.sh/@mlc-ai/web-llm@0.2.88');
-  const choices=webllm.prebuiltAppConfig.model_list.filter(x=>/Qwen2-0\.5B-Instruct/i.test(x.model_id));
+  const webllm=await import('https://esm.run/@mlc-ai/web-llm@0.2.86');
+  const choices=webllm.prebuiltAppConfig.model_list.filter(x=>/Qwen2(?:\.5)?-0\.5B-Instruct/i.test(x.model_id));
   if(!choices.length)throw Error('使用可能な0.5Bモデルが見つかりません。');
   const selected=choices.find(x=>/q4f16_1/i.test(x.model_id))||choices[0];
   engine=await webllm.CreateMLCEngine(selected.model_id,{initProgressCallback:p=>status('端末内AI読み込み：'+Math.round((p.progress||0)*100)+'% '+(p.text||''))});
@@ -190,7 +191,7 @@ async function loadDevice(){
  finally{working=false;refresh();}
 }
 function exportHistory(){
- const payload=JSON.stringify({exportedAt:new Date().toISOString(),version:1,topicsSeen:data.topicsSeen,sessions:data.sessions,totalTurns:data.totalTurns},null,2);
+ const payload=JSON.stringify({exportedAt:new Date().toISOString(),version:1,topicsSeen:data.topicsSeen,sessions:data.sessions,archives:data.archives,totalTurns:data.totalTurns},null,2);
  const url=URL.createObjectURL(new Blob([payload],{type:'application/json'}));
  const a=document.createElement('a');a.href=url;a.download='english-quest-speaking-writing-history.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
  status('会話履歴をJSONで書き出しました。');
